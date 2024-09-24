@@ -1,0 +1,37 @@
+@startuml Application_visiteur
+
+actor Visiteur
+actor Utilisateur
+actor Orthophoniste
+
+rectangle Ortholib {
+    usecase (Accéder à la page d'accueil) as accueil 
+    usecase (Voir la page de présentation ) as Presentation
+    usecase (Voir la vidéo de présentation d'Ortholib) as VideoPresentation
+    usecase (Accéder au menu) as menu
+    usecase (Accéder à la page de Contact ) as contact
+    usecase (Envoyer une des questions le formulaire de Contact ) as questionContact 
+    usecase (Voir la page d'inscription) as inscription
+    usecase (Remplir le formulaire d'inscription) as formulaireInscription
+    usecase (Recevoir un email de confirmation ) as emailConfirmation
+    usecase (Saisir le code de confirmation) as codeConfirmation
+    usecase "Compte active (Utilisateur)" as compteActive
+    usecase (Connexion) as connexion
+}
+
+
+
+/' USECASE -- USECASE '/
+accueil <.. Presentation
+Presentation <.. VideoPresentation
+VideoPresentation <.. menu
+menu <.. contact
+contact <.. questionContact
+menu <.. inscription
+inscription <.. formulaireInscription
+formulaireInscription <.. emailConfirmation
+emailConfirmation <.. codeConfirmation
+codeConfirmation <.. compteActive
+compteActive <.. connexion
+
+@enduml
