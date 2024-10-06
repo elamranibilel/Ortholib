@@ -19,6 +19,23 @@ rectangle Ortholib {
     usecase (Connexion) as connexion
 }
 
+/' ACTOR -- ACTOR '/
+Orthophoniste -> Utilisateur
+Utilisateur -> Visiteur
+
+/' ACTOR -- USECASE'/
+Visiteur -- accueil
+Visiteur -- Presentation
+Visiteur -- VideoPresentation
+Visiteur -- menu
+Visiteur -- contact
+Visiteur -- questionContact
+Visiteur -- inscription
+Visiteur -- formulaireInscription
+Visiteur -- emailConfirmation
+Visiteur -- codeConfirmation
+Visiteur -- compteActive
+Visiteur -- connexion
 
 
 /' USECASE -- USECASE '/
