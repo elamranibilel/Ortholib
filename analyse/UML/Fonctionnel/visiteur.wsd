@@ -1,7 +1,8 @@
 @startuml Application_visiteur
 
+left to right direction
 actor Visiteur
-actor Utilisateur
+actor User
 actor Orthophoniste
 
 rectangle Ortholib {
@@ -15,13 +16,13 @@ rectangle Ortholib {
     usecase (Remplir le formulaire d'inscription) as formulaireInscription
     usecase (Recevoir un email de confirmation ) as emailConfirmation
     usecase (Saisir le code de confirmation) as codeConfirmation
-    usecase "Compte active (Utilisateur)" as compteActive
+    usecase (Compte active) as compteActive
     usecase (Connexion) as connexion
 }
 
 /' ACTOR -- ACTOR '/
-Orthophoniste -> Utilisateur
-Utilisateur -> Visiteur
+Orthophoniste -> User
+User -> Visiteur
 
 /' ACTOR -- USECASE'/
 Visiteur -- accueil

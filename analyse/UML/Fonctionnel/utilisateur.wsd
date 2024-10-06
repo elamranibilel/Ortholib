@@ -1,0 +1,33 @@
+@startuml Application_User
+
+left to right direction
+
+actor User 
+actor Orthophoniste
+
+rectangle Ortholib {
+    usecase (Connexion) as Connexion
+    usecase (Proposition de passer un test) as PropositionTest
+    usecase (Passer le test) as PasserTest
+    usecase (Ne pas passer le test) as NonPasserTest
+    usecase (Reproposer le test avec explication) as Reproposer
+    usecase (Test de 10 questions) as TestQuestions
+    usecase (Réponses enregistrés et affichés) as Reponses 
+
+}
+
+/' ACTOR -- ACTOR '/
+User <-- Orthophoniste
+
+/' ACTOR -- USECASE '/
+Connexion -- User
+
+/' USECASE -- USECASE '/ 
+Connexion <.. PropositionTest : include
+PropositionTest <|-- PasserTest
+PropositionTest <|-- NonPasserTest
+NonPasserTest <.. Reproposer : include
+PasserTest <.. TestQuestions : include
+TestQuestions <.. Reponses : include
+
+@enduml
