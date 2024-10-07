@@ -13,21 +13,32 @@ rectangle Ortholib {
     usecase (Reproposer le test avec explication) as Reproposer
     usecase (Test de 10 questions) as TestQuestions
     usecase (Réponses enregistrés et affichés) as Reponses 
-
+    usecase (Des Difficultés renseignées) as Difficultes
+    usecase (Acces direct à l'application) as AccesDirect
+    usecase (Acces restreint, passage par le test conseillé) as AccesRestreint
+    usecase (Choix de l'Orthophoniste entre 1 et 3) as ChoixOrthophoniste
+    usecase (Orthophoniste Disponible) as DispoOthophoniste
 }
 
 /' ACTOR -- ACTOR '/
 User <-- Orthophoniste
 
 /' ACTOR -- USECASE '/
-Connexion -- User
+User -- Connexion
+User -- PropositionTest
+User -- PasserTest
+User -- NonPasserTest
+User -- Reproposer
+User -- TestQuestions
+User -- Reponses
 
 /' USECASE -- USECASE '/ 
 Connexion <.. PropositionTest : include
-PropositionTest <|-- PasserTest
-PropositionTest <|-- NonPasserTest
+PropositionTest <.. PasserTest : extends
+PropositionTest <.. NonPasserTest : extends
 NonPasserTest <.. Reproposer : include
 PasserTest <.. TestQuestions : include
 TestQuestions <.. Reponses : include
+
 
 @enduml
