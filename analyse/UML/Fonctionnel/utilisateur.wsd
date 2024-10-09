@@ -11,6 +11,7 @@ rectangle Ortholib {
     usecase (Passer le test) as PasserTest
     usecase (Ne pas passer le test) as NonPasserTest
     usecase (Reproposer le test avec explication) as Reproposer
+    usecase (Avoir déjà notifié des Difficultes )
     usecase (Test de 10 questions) as TestQuestions
     usecase (Réponses enregistrés et affichés) as Reponses 
     usecase (Des Difficultés renseignées) as Difficultes
