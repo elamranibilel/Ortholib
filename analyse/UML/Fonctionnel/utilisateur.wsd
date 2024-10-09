@@ -18,6 +18,9 @@ rectangle Ortholib {
     usecase (Acces restreint, passage par le test conseillé) as AccesRestreint
     usecase (Choix de l'Orthophoniste entre 1 et 3) as ChoixOrthophoniste
     usecase (Orthophoniste Disponible) as DispoOthophoniste
+    usecase (Acces à l'espace personnel) as EspacePersonnel
+    usecase (Calcul de la distance vers un Orthophoniste Disponible) as DistanceOrthophoniste
+    usecase (Consultation des résultats) as ConsultationResultats
 }
 
 /' ACTOR -- ACTOR '/
@@ -37,6 +40,7 @@ Connexion <.. PropositionTest : include
 PropositionTest <.. PasserTest : extends
 PropositionTest <.. NonPasserTest : extends
 NonPasserTest <.. Reproposer : include
+NonPasserTest <.. EspacePersonnel : include
 PasserTest <.. TestQuestions : include
 TestQuestions <.. Reponses : include
 
