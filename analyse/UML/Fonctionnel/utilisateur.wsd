@@ -13,7 +13,7 @@ rectangle Ortholib {
     usecase (Reproposer le test avec explication) as Reproposer
     usecase (Avoir déjà notifié des Difficultes )
     usecase (Test de 10 questions) as TestQuestions
-    usecase (Réponses enregistrés et affichés) as Reponses 
+    usecase (Résultats enregistrés et affichés) as Reponses 
     usecase (Des Difficultés renseignées) as Difficultes
     usecase (Acces direct à l'application) as AccesDirect
     usecase (Acces restreint, passage par le test conseillé) as AccesRestreint
