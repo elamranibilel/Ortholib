@@ -1,0 +1,19 @@
+ACTORS: 
+
+- Visiteur 
+- Patient
+- Orthophoniste
+- Administrateur 
+
+USECASES (Visiteur):
+- consulter la page d'accueil
+- consulter la page de présentation
+- consulter la liste des Orthophoniste proposées
+- consulter sur le règlement de l'application
+- consulter les nouveautés de l'application 
+- se renseigner avec une vidéo sur la présentation de l'application et le texte à écrit
+- s'inscrire
+
+USECASES (Patient):
+- se connecter
+- proposer de passer un test 
