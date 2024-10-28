@@ -16,6 +16,8 @@ rectangle Ortholib {
     usecase (S'inscrire) as inscription
     /' usecase (Recevoir un email de confirmation ) as emailConfirmation
     usecase (Saisir le code de confirmation) as codeConfirmation '/
+    usecase (Validation d'un Compte) as Valider
+    usecase (Compte active) as CompteActive
 }
 
 /' ACTOR -- USECASE'/
@@ -28,6 +30,8 @@ Visiteur -- ReglementApplication
 Visiteur -- NouveautesApplication
 Visiteur -- contact
 Visiteur -- inscription
+Admin -- Valider
+Visiteur -- CompteActive
 
 
 /' USECASE -- USECASE '/
