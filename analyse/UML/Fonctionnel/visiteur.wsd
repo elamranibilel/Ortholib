@@ -5,45 +5,39 @@ actor Visiteur
 
 rectangle Ortholib {
     usecase (Accéder à la page d'accueil) as accueil 
-    usecase (Voir la page de présentation ) as Presentation
-    usecase (Voir la vidéo de présentation d'Ortholib) as VideoPresentation
+    usecase (Voir la vidéo de présentation d'application et un texte) as VideoPresentation
     usecase (Accéder au menu) as menu
-    usecase (Accéder à la page de Contact ) as contact
-    usecase (Envoyer une des questions le formulaire de Contact ) as questionContact 
-    usecase (Voir la page d'inscription) as inscription
-    usecase (Remplir le formulaire d'inscription) as formulaireInscription
-    usecase (Recevoir un email de confirmation ) as emailConfirmation
-    usecase (Saisir le code de confirmation) as codeConfirmation
-    usecase (Compte active) as compteActive
-    usecase (Connexion) as connexion
+    usecase (Consulter la page de Contact ) as contact
+    usecase (Consulter la page de présentation ) as Presentation
+    usecase (consulter la liste des Orthophoniste proposées) as ListeOrthophonistes
+    usecase (consulter sur le règlement de l'application) as ReglementApplication
+    usecase (consulter les nouveautés de l'application) as NouveautesApplication
+/'  usecase (Envoyer une des questions au formulaire de Contact ) as questionContact '/    
+    usecase (S'inscrire) as inscription
+    /' usecase (Recevoir un email de confirmation ) as emailConfirmation
+    usecase (Saisir le code de confirmation) as codeConfirmation '/
 }
 
 /' ACTOR -- USECASE'/
 Visiteur -- accueil
-Visiteur -- Presentation
 Visiteur -- VideoPresentation
 Visiteur -- menu
+Visiteur -- Presentation
+Visiteur -- ListeOrthophonistes
+Visiteur -- ReglementApplication
+Visiteur -- NouveautesApplication
 Visiteur -- contact
-Visiteur -- questionContact
 Visiteur -- inscription
-Visiteur -- formulaireInscription
-Visiteur -- emailConfirmation
-Visiteur -- codeConfirmation
-Visiteur -- compteActive
-Visiteur -- connexion
 
 
 /' USECASE -- USECASE '/
-accueil <.. Presentation
-Presentation <.. VideoPresentation
-VideoPresentation <.. menu
-menu <.. contact
-contact <.. questionContact
-menu <.. inscription
-inscription <.. formulaireInscription
-formulaireInscription <.. emailConfirmation
-emailConfirmation <.. codeConfirmation
-codeConfirmation <.. compteActive
-compteActive <.. connexion
+accueil <.. VideoPresentation : include
+accueil <.. menu : include
+menu <.. Presentation : extends
+menu <.. ReglementApplication : include
+Presentation <.. ListeOrthophonistes : extends
+Presentation <.. NouveautesApplication : extends
+menu <.. contact : include
+menu <.. inscription : include
 
 @enduml
