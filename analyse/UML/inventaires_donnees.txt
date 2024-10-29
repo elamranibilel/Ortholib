@@ -15,5 +15,6 @@ USECASES (Visiteur):
 - s'inscrire
 
 USECASES (Patient):
+- compte est activé par Administrateur
 - se connecter
 - proposer de passer un test 

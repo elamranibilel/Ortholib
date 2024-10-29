@@ -43,5 +43,7 @@ Presentation <.. ListeOrthophonistes : extends
 Presentation <.. NouveautesApplication : extends
 menu <.. contact : include
 menu <.. inscription : include
+inscription <.. Valider : include
+Valider <.. CompteActive : include
 
 @enduml
