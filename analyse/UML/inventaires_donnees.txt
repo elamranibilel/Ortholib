@@ -6,15 +6,32 @@ ACTORS:
 - Administrateur 
 
 USECASES (Visiteur):
-- consulter la page d'accueil
-- consulter la page de présentation
-- consulter la liste des Orthophoniste proposées
-- consulter sur le règlement de l'application
-- consulter les nouveautés de l'application 
-- se renseigner avec une vidéo sur la présentation de l'application et le texte à écrit
-- s'inscrire
+    - Accéder à la page d'accueil
+    - Voir la vidéo de présentation d'application et un texte
+    - Accéder au menu
+    - Consulter la page de Contact
+    - Consulter la page de présentation
+    - consulter la liste des Orthophoniste proposées
+    - consulter sur le règlement de l'application
+    - consulter les nouveautés de l'application
+    - S'inscrire
+    - Validation d'un Compte
+    - Compte active
 
-USECASES (Patient):
-- compte est activé par Administrateur
+USECASES (Utilisateur):
 - se connecter
-- proposer de passer un test 
+- Propositions de passer Test 
+- Refuser de passer le test 
+- Passer le test
+- Confirmer les difficultes sans passer le test 
+- Validation des résultats
+- Orientation vers un niveau d’apprentissage
+- Choix d’un orthophoniste pour consultation
+- Accès à l’espace personnel
+- Consulter les résultats et progrès des séances orthophoniques
+- Consulter les exercices donnés par l’orthophoniste
+- Terminer les exercices
+- Accéder aux jeux proposés par l’application Ortholib
+- Choix de changer d’orthophoniste
+- Consulter les informations personnelles dans la page de compte
+- Modifier les informations personnelles dans la page de compte
