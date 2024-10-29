@@ -35,3 +35,35 @@ USECASES (Utilisateur):
 - Choix de changer d’orthophoniste
 - Consulter les informations personnelles dans la page de compte
 - Modifier les informations personnelles dans la page de compte
+- Consulter des jeux dans la liste
+- Sélectionner un jeu dans la liste
+- Jouer à un jeu
+- Sauvegarder les résultats
+- Consulter la liste des exercices personnalises
+- Selectionner un exercice
+- Completer un exercice 
+
+USECASES (Orthophonistes):
+- Accéder à la liste des patients
+- Planifier une séance avec un patient
+- Consulter et modifier le profil d’un patient
+- Envoyer un message ou un fichier au patient
+- Suivre la progression et noter le patient après une séance
+
+- Consulter les informations personnelles
+- Mettre a jour les informations personnelles
+- Suivre le compteur des heures de séance
+- Consulter le nombre d'exercices personnalisés créés
+- Visualiser la liste des exercices personnalisés
+- Assigner un exercice personnalisé à un patient
+
+- Consulter la liste des jeux
+- Afficher les détails d’un jeu
+- Consulter les patients ayant participé à un jeu
+- Consulter les scores des patients sur un jeu spécifique
+
+- Accéder à la liste des jeux personnalisables
+- Personnaliser un jeu de vocabulaire ou de mémoire
+- Sélectionner des patients pour un jeu personnalisé
+- Personnaliser un jeu de dictée avec des mots et des fichiers audio
+- Envoyer un jeu de dictée personnalisé aux patients

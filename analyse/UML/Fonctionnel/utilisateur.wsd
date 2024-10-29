@@ -1,49 +1,64 @@
 @startuml Application_User
 
-left to right direction
+actor Utilisateur
 
-actor User 
-actor Orthophoniste
+usecase "Se connecter" as Connexion
+usecase "Propositions de passer Test" as PropositionsTest
+usecase "Refuser de passer le test" as RefuserTest
+usecase "Passer le test" as PasserTest
+usecase "Confirmer les difficultés sans passer le test" as ConfirmerDifficultesSansTest
+usecase "Validation des résultats" as ValidationResultat
+usecase "Orientation vers un niveau d’apprentissage" as OrientationNiveauApprentissage
+usecase "Choix d’un orthophoniste pour consultation" as ChoixOrthophonisteConsultation
+usecase "Accès à l’espace personnel" as EspacePersonnel
+usecase "Consulter les résultats et progrès des séances orthophoniques" as ConsulterResultatProgresSeances
+usecase "Consulter les exercices donnés par l’orthophoniste" as ConsulterExercicesDonnes
+usecase "Terminer les exercices" as TerminerExercices
+usecase "Accéder aux jeux proposés par l’application Ortholib" as AccederJeuxProposes
+usecase "Choix de changer d’orthophoniste" as ChoixOrthophoniste
+usecase "Consulter les informations personnelles dans la page de compte" as ConsulterInfosPersonnelle
+usecase "Modifier les informations personnelles dans la page de compte" as ModifierInfosPersonnelle
+usecase "Consulter des jeux dans la liste" as ConsulterJeuListe
+usecase "Sélectionner un jeu dans la liste" as SelectionnerJeuListe
+usecase "Jouer à un jeu" as JouerJeu
+usecase "Sauvegarder les résultats" as SauvegardeResultat
+usecase "Consulter la liste des exercices personnalisés" as ConsulterListeExercices
+usecase "Selectionner un exercice" as SelectionnerExercice
+usecase "Completer un exercice" as CompleterExercice
 
-rectangle Ortholib {
-    usecase (Connexion) as Connexion
-    usecase (Proposition de passer un test) as PropositionTest
-    usecase (Passer le test) as PasserTest
-    usecase (Ne pas passer le test) as NonPasserTest
-    usecase (Reproposer le test avec explication) as Reproposer
-    usecase (Avoir déjà notifié des Difficultes )
-    usecase (Test de 10 questions) as TestQuestions
-    usecase (Résultats enregistrés et affichés) as Reponses 
-    usecase (Des Difficultés renseignées) as Difficultes
-    usecase (Acces direct à l'application) as AccesDirect
-    usecase (Acces restreint, passage par le test conseillé) as AccesRestreint
-    usecase (Choix de l'Orthophoniste entre 1 et 3) as ChoixOrthophoniste
-    usecase (Orthophoniste Disponible) as DispoOthophoniste
-    usecase (Acces à l'espace personnel) as EspacePersonnel
-    usecase (Calcul de la distance vers un Orthophoniste Disponible) as DistanceOrthophoniste
-    usecase (Consultation des résultats) as ConsultationResultats
-}
+Utilisateur -- Connexion
+Utilisateur -- PropositionsTest
+Utilisateur -- RefuserTest
+Utilisateur -- PasserTest
+Utilisateur -- ConfirmerDifficultesSansTest
+Utilisateur -- ChoixOrthophonisteConsultation
+Utilisateur -- EspacePersonnel
+Utilisateur -- ConsulterResultatProgresSeances
+Utilisateur -- ConsulterExercicesDonnes
+Utilisateur -- AccederJeuxProposes
+Utilisateur -- ChoixOrthophoniste
+Utilisateur -- ConsulterInfosPersonnelle
+Utilisateur -- ModifierInfosPersonnelle
+Utilisateur -- ConsulterJeuListe
+Utilisateur -- SauvegardeResultat
+Utilisateur -- ConsulterListeExercices
 
-/' ACTOR -- ACTOR '/
-User <-- Orthophoniste
-
-/' ACTOR -- USECASE '/
-User -- Connexion
-User -- PropositionTest
-User -- PasserTest
-User -- NonPasserTest
-User -- Reproposer
-User -- TestQuestions
-User -- Reponses
-
-/' USECASE -- USECASE '/ 
-Connexion <.. PropositionTest : include
-PropositionTest <.. PasserTest : extends
-PropositionTest <.. NonPasserTest : extends
-NonPasserTest <.. Reproposer : include
-NonPasserTest <.. EspacePersonnel : include
-PasserTest <.. TestQuestions : include
-TestQuestions <.. Reponses : include
-
+Connexion <.. ValidationResultat : include
+Connexion <.. EspacePersonnel : include
+PropositionsTest <.. RefuserTest : extend
+RefuserTest <.. PropositionsTest : extend
+PasserTest <.. ValidationResultat : include
+ConfirmerDifficultesSansTest <.. ChoixOrthophonisteConsultation : extend
+ConsulterResultatProgresSeances <.. EspacePersonnel : include
+ConsulterExercicesDonnes <.. EspacePersonnel : include
+TerminerExercices <.. ConsulterExercicesDonnes : include
+AccederJeuxProposes <.. EspacePersonnel : include
+AccederJeuxProposes <.. ConsulterJeuListe : include
+SelectionnerJeuListe <.. AccederJeuxProposes : include
+JouerJeu <.. SelectionnerJeuListe : include
+SauvegardeResultat <.. JouerJeu : include
+SelectionnerExercice <.. ConsulterExercicesDonnes : include
+CompleterExercice <.. SelectionnerExercice : include
+CompleterExercice <.. SauvegardeResultat : include
 
 @enduml
