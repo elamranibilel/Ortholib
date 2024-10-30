@@ -83,4 +83,5 @@ JouerJeu <.. SauvegardeResultat : include
 EspacePersonnel <.. ConsulterListeExercices : include
 ConsulterListeExercices <.. SelectionnerExercice : include
 SelectionnerExercice <.. CompleterExercice : include
+
 @enduml

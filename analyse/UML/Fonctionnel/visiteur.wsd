@@ -5,7 +5,7 @@ left to right direction
 actor Administrateur as Admin
 actor Visiteur
 
-rectangle Ortholib {
+rectangle Application_Ortholib {
     usecase (Accéder à la page d'accueil) as accueil 
     usecase (Voir la vidéo de présentation d'application et un texte) as VideoPresentation
     usecase (Accéder au menu) as menu

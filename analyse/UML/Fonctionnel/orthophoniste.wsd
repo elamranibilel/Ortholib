@@ -1,0 +1,87 @@
+@startuml Application_Orthophoniste
+
+left to right direction
+
+actor Administrateur as Admin
+actor Orthophoniste
+
+rectangle Application_Ortholib {
+    usecase "Accès à l’espace orthophonie" as EspaceOrthophonie
+    usecase "Accéder à la liste des patients" as AccederListePatients
+    usecase "Planifier une séance avec un patient" as PlanifierSeancePatient
+    usecase "Consulter le profil d’un patient" as ConsulterProfilPatient
+    usecase "Modifier le profil d’un patient" as ModifierProfilPatient
+    usecase "Envoyer un message ou un fichier au patient" as EnvoyerMessageFichier
+    usecase "Suivre la progression et noter le patient après une séance" as SuivreProgresNoterPatient
+    usecase "Consulter les informations personnelles" as ConsulterInfos
+    usecase "Mettre à jour les informations personnelles" as ModifierInfos
+    usecase "Suivre le compteur des heures de séance" as SuivreCompteurHeuresSeance
+    usecase "Consulter le nombre d'exercices personnalisés créés" as ConsulterNombreExercicesPersonnalises
+    usecase "Visualiser la liste des exercices personnalisés" as VisualiserListeExercicesPersonnalises
+    usecase "Assigner un exercice personnalisé à un patient" as AssignerExercicePersonnalisePatient
+    usecase "Consulter la liste des jeux" as ConsulterListeJeux
+    usecase "Afficher les détails d’un jeu" as AfficherDetailsJeu
+    usecase "Consulter les patients ayant participé à un jeu" as ConsulterPatientsParticipeJeu
+    usecase "Consulter les scores des patients sur un jeu spécifique" as ConsulterScoresJeu
+    usecase "Accéder à la liste des jeux personnalisables" as ListeJeuxPersonnalisables
+    usecase "Personnaliser un jeu de vocabulaire" as PersonnaliserVocabulaire
+    usecase "Personnaliser un jeu de mémoire" as PersonnaliserMemoire
+    usecase "Personnaliser un jeu de dictée avec des mots et des fichiers audio" as PersonnaliserDicteeMotsAudio
+    usecase "Sélectionner des patients pour un jeu personnalisé" as SelectionnerPatientJeuPersonnalise
+}
+
+/' ACTORS -- ACTORS '/
+
+Orthophoniste <- Admin
+
+/' ACTORS -- USECASES '/
+
+Orthophoniste -- EspaceOrthophonie
+Orthophoniste -- AccederListePatients
+Orthophoniste -- PlanifierSeancePatient
+Orthophoniste -- ConsulterProfilPatient
+Orthophoniste -- ConsulterProfilPatient
+Orthophoniste -- EnvoyerMessageFichier
+Orthophoniste -- SuivreProgresNoterPatient
+Orthophoniste -- ConsulterInfos
+Orthophoniste -- ModifierInfos
+Orthophoniste -- SuivreCompteurHeuresSeance
+Orthophoniste -- ConsulterNombreExercicesPersonnalises
+Orthophoniste -- VisualiserListeExercicesPersonnalises
+Orthophoniste -- AssignerExercicePersonnalisePatient
+Orthophoniste -- ConsulterListeJeux
+Orthophoniste -- AfficherDetailsJeu
+Orthophoniste -- ConsulterPatientsParticipeJeu
+Orthophoniste -- ConsulterScoresJeu
+Orthophoniste -- ListeJeuxPersonnalisables
+Orthophoniste -- PersonnaliserVocabulaire
+Orthophoniste -- PersonnaliserMemoire
+Orthophoniste -- PersonnaliserDicteeMotsAudio
+Orthophoniste -- SelectionnerPatientJeuPersonnalise
+
+/' USECASES -- USECASES '/
+
+EspaceOrthophonie <.. AccederListePatients : include
+AccederListePatients <.. PlanifierSeancePatient : include
+PlanifierSeancePatient <.. ConsulterProfilPatient : include
+ConsulterProfilPatient <.. ModifierProfilPatient : extend
+EspaceOrthophonie <.. EnvoyerMessageFichier : extend
+EspaceOrthophonie <.. SuivreProgresNoterPatient : include
+EspaceOrthophonie <.. ConsulterInfos : include
+ConsulterInfos <.. ModifierInfos : extend
+ConsulterInfos <.. SuivreCompteurHeuresSeance : include
+ConsulterInfos <.. ConsulterNombreExercicesPersonnalises : extend
+ConsulterNombreExercicesPersonnalises <.. VisualiserListeExercicesPersonnalises : include
+EspaceOrthophonie <.. VisualiserListeExercicesPersonnalises : include
+VisualiserListeExercicesPersonnalises <.. AssignerExercicePersonnalisePatient : extend
+EspaceOrthophonie <.. ConsulterListeJeux : extend
+ConsulterListeJeux <.. AfficherDetailsJeu : include
+AfficherDetailsJeu <.. ConsulterPatientsParticipeJeu : extend
+ConsulterPatientsParticipeJeu <.. ConsulterScoresJeu : extend
+EspaceOrthophonie <.. ListeJeuxPersonnalisables : include
+ListeJeuxPersonnalisables <|-- PersonnaliserVocabulaire 
+ListeJeuxPersonnalisables <|-- PersonnaliserMemoire 
+ListeJeuxPersonnalisables <|-- PersonnaliserDicteeMotsAudio
+ListeJeuxPersonnalisables <.. SelectionnerPatientJeuPersonnalise : include
+
+@enduml
