@@ -1,6 +1,8 @@
 @startuml Application_visiteur
 
 left to right direction
+
+actor Administrateur as Admin
 actor Visiteur
 
 rectangle Ortholib {

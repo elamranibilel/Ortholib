@@ -1,6 +1,9 @@
-@startuml Application_User
+@startuml Application_Utilisateur
 
-actor Utilisateur
+left to right direction
+
+actor Administrateur as Admin 
+actor Utilisateur 
 
 rectangle Application_Ortholib {
     usecase "Se connecter" as Connexion
@@ -28,21 +31,11 @@ rectangle Application_Ortholib {
     usecase "Completer un exercice" as CompleterExercice
 }
 
+/' ACTORS -- ACTORS '/
 
+Utilisateur <- Admin
 
-Connexion <.. PropositionsTest : include
-PropositionsTest <|-- RefuserTest 
-PropositionsTest <|-- PasserTest 
-PropositionsTest <|-- ConfirmerDifficultesSansTest 
-PropositionsTest <.. ValidationResultat : include
-ValidationResultat <.. OrientationNiveauApprentissage : include
-OrientationNiveauApprentissage <.. ChoixOrthophonisteConsultation : include
-ChoixOrthophonisteConsultation <.. EspacePersonnel : include
-EspacePersonnel <.. ConsulterResultatProgresSeances : include
-EspacePersonnel <.. ConsulterExercicesDonnes
-
-
-
+/' ACTORS -- USECASES  '/
 
 Utilisateur -- Connexion
 Utilisateur -- PropositionsTest
@@ -66,22 +59,28 @@ Utilisateur -- ConsulterListeExercices
 Utilisateur -- SelectionnerExercice
 Utilisateur -- CompleterExercice
 
-/' Connexion <.. ValidationResultat : include
-Connexion <.. EspacePersonnel : include
-PropositionsTest <.. RefuserTest : extend
-RefuserTest <.. PropositionsTest : extend
-PasserTest <.. ValidationResultat : include
-ConfirmerDifficultesSansTest <.. ChoixOrthophonisteConsultation : extend
-ConsulterResultatProgresSeances <.. EspacePersonnel : include
-ConsulterExercicesDonnes <.. EspacePersonnel : include
-TerminerExercices <.. ConsulterExercicesDonnes : include
-AccederJeuxProposes <.. EspacePersonnel : include
-AccederJeuxProposes <.. ConsulterJeuListe : include
-SelectionnerJeuListe <.. AccederJeuxProposes : include
-JouerJeu <.. SelectionnerJeuListe : include
-SauvegardeResultat <.. JouerJeu : include
-SelectionnerExercice <.. ConsulterExercicesDonnes : include
-CompleterExercice <.. SelectionnerExercice : include
-CompleterExercice <.. SauvegardeResultat : include '/
+/' USECASES -- USECASES '/
 
+Connexion <.. PropositionsTest : include
+PropositionsTest <|-- RefuserTest 
+PropositionsTest <|-- PasserTest 
+PropositionsTest <|-- ConfirmerDifficultesSansTest 
+PropositionsTest <.. ValidationResultat : include
+ValidationResultat <.. OrientationNiveauApprentissage : include
+OrientationNiveauApprentissage <.. ChoixOrthophonisteConsultation : include
+ChoixOrthophonisteConsultation <.. EspacePersonnel : include
+EspacePersonnel <.. ConsulterResultatProgresSeances : include
+EspacePersonnel <.. ConsulterExercicesDonnes : include
+ConsulterExercicesDonnes <.. TerminerExercices : include
+EspacePersonnel <.. AccederJeuxProposes : extend
+EspacePersonnel <.. ChoixOrthophoniste : extend
+EspacePersonnel <.. ConsulterInfosPersonnelle : include
+ConsulterInfosPersonnelle <.. ModifierInfosPersonnelle : extend
+AccederJeuxProposes <.. ConsulterJeuListe : include
+ConsulterJeuListe <.. SelectionnerJeuListe : include
+SelectionnerJeuListe <.. JouerJeu : include
+JouerJeu <.. SauvegardeResultat : include
+EspacePersonnel <.. ConsulterListeExercices : include
+ConsulterListeExercices <.. SelectionnerExercice : include
+SelectionnerExercice <.. CompleterExercice : include
 @enduml
