@@ -2,29 +2,47 @@
 
 actor Utilisateur
 
-usecase "Se connecter" as Connexion
-usecase "Propositions de passer Test" as PropositionsTest
-usecase "Refuser de passer le test" as RefuserTest
-usecase "Passer le test" as PasserTest
-usecase "Confirmer les difficultés sans passer le test" as ConfirmerDifficultesSansTest
-usecase "Validation des résultats" as ValidationResultat
-usecase "Orientation vers un niveau d’apprentissage" as OrientationNiveauApprentissage
-usecase "Choix d’un orthophoniste pour consultation" as ChoixOrthophonisteConsultation
-usecase "Accès à l’espace personnel" as EspacePersonnel
-usecase "Consulter les résultats et progrès des séances orthophoniques" as ConsulterResultatProgresSeances
-usecase "Consulter les exercices donnés par l’orthophoniste" as ConsulterExercicesDonnes
-usecase "Terminer les exercices" as TerminerExercices
-usecase "Accéder aux jeux proposés par l’application Ortholib" as AccederJeuxProposes
-usecase "Choix de changer d’orthophoniste" as ChoixOrthophoniste
-usecase "Consulter les informations personnelles dans la page de compte" as ConsulterInfosPersonnelle
-usecase "Modifier les informations personnelles dans la page de compte" as ModifierInfosPersonnelle
-usecase "Consulter des jeux dans la liste" as ConsulterJeuListe
-usecase "Sélectionner un jeu dans la liste" as SelectionnerJeuListe
-usecase "Jouer à un jeu" as JouerJeu
-usecase "Sauvegarder les résultats" as SauvegardeResultat
-usecase "Consulter la liste des exercices personnalisés" as ConsulterListeExercices
-usecase "Selectionner un exercice" as SelectionnerExercice
-usecase "Completer un exercice" as CompleterExercice
+rectangle Application_Ortholib {
+    usecase "Se connecter" as Connexion
+    usecase "Propositions de passer Test" as PropositionsTest
+    usecase "Refuser de passer le test" as RefuserTest
+    usecase "Passer le test" as PasserTest
+    usecase "Confirmer les difficultés sans passer le test" as ConfirmerDifficultesSansTest
+    usecase "Validation des résultats" as ValidationResultat
+    usecase "Orientation vers un niveau d’apprentissage" as OrientationNiveauApprentissage
+    usecase "Choix d’un orthophoniste pour consultation" as ChoixOrthophonisteConsultation
+    usecase "Accès à l’espace personnel" as EspacePersonnel
+    usecase "Consulter les résultats et progrès des séances orthophoniques" as ConsulterResultatProgresSeances
+    usecase "Consulter les exercices donnés par l’orthophoniste" as ConsulterExercicesDonnes
+    usecase "Terminer les exercices" as TerminerExercices
+    usecase "Accéder aux jeux proposés par l’application Ortholib" as AccederJeuxProposes
+    usecase "Choix de changer d’orthophoniste" as ChoixOrthophoniste
+    usecase "Consulter les informations personnelles dans la page de compte" as ConsulterInfosPersonnelle
+    usecase "Modifier les informations personnelles dans la page de compte" as ModifierInfosPersonnelle
+    usecase "Consulter des jeux dans la liste" as ConsulterJeuListe
+    usecase "Sélectionner un jeu dans la liste" as SelectionnerJeuListe
+    usecase "Jouer à un jeu" as JouerJeu
+    usecase "Sauvegarder les résultats" as SauvegardeResultat
+    usecase "Consulter la liste des exercices personnalisés" as ConsulterListeExercices
+    usecase "Selectionner un exercice" as SelectionnerExercice
+    usecase "Completer un exercice" as CompleterExercice
+}
+
+
+
+Connexion <.. PropositionsTest : include
+PropositionsTest <|-- RefuserTest 
+PropositionsTest <|-- PasserTest 
+PropositionsTest <|-- ConfirmerDifficultesSansTest 
+PropositionsTest <.. ValidationResultat : include
+ValidationResultat <.. OrientationNiveauApprentissage : include
+OrientationNiveauApprentissage <.. ChoixOrthophonisteConsultation : include
+ChoixOrthophonisteConsultation <.. EspacePersonnel : include
+EspacePersonnel <.. ConsulterResultatProgresSeances : include
+EspacePersonnel <.. ConsulterExercicesDonnes
+
+
+
 
 Utilisateur -- Connexion
 Utilisateur -- PropositionsTest
@@ -35,15 +53,20 @@ Utilisateur -- ChoixOrthophonisteConsultation
 Utilisateur -- EspacePersonnel
 Utilisateur -- ConsulterResultatProgresSeances
 Utilisateur -- ConsulterExercicesDonnes
+Utilisateur -- TerminerExercices
 Utilisateur -- AccederJeuxProposes
 Utilisateur -- ChoixOrthophoniste
 Utilisateur -- ConsulterInfosPersonnelle
 Utilisateur -- ModifierInfosPersonnelle
 Utilisateur -- ConsulterJeuListe
+Utilisateur -- SelectionnerJeuListe
+Utilisateur -- JouerJeu
 Utilisateur -- SauvegardeResultat
 Utilisateur -- ConsulterListeExercices
+Utilisateur -- SelectionnerExercice
+Utilisateur -- CompleterExercice
 
-Connexion <.. ValidationResultat : include
+/' Connexion <.. ValidationResultat : include
 Connexion <.. EspacePersonnel : include
 PropositionsTest <.. RefuserTest : extend
 RefuserTest <.. PropositionsTest : extend
@@ -59,6 +82,6 @@ JouerJeu <.. SelectionnerJeuListe : include
 SauvegardeResultat <.. JouerJeu : include
 SelectionnerExercice <.. ConsulterExercicesDonnes : include
 CompleterExercice <.. SelectionnerExercice : include
-CompleterExercice <.. SauvegardeResultat : include
+CompleterExercice <.. SauvegardeResultat : include '/
 
 @enduml
