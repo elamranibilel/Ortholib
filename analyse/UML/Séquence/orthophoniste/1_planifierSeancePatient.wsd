@@ -1,0 +1,22 @@
+@startuml Planifier_Seance
+actor Orthophoniste
+participant Système
+participant Patient
+
+Orthophoniste -> Système: Accéder à la liste des patients
+Système --> Orthophoniste: Affiche la liste des patients
+
+Orthophoniste -> Système: Sélectionner un patient et accéder à la planification
+Système --> Orthophoniste: Affiche les disponibilités de l'orthophoniste et du patient
+
+Orthophoniste -> Système: Sélectionner date et heure
+Système -> Système: Valider la disponibilité
+
+alt Disponibilité OK
+    Système -> Patient: Envoie notification de la séance par email/SMS
+    Système --> Orthophoniste: Confirmation de la séance planifiée
+else Dépassement d'heures de travail
+    Système --> Orthophoniste: Affiche erreur
+end
+
+@enduml
