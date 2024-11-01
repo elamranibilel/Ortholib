@@ -1,0 +1,172 @@
+@startuml Class
+
+/' class Visiteur {
+    - nom : String
+    - prenom : String
+    - email : String
+    - motDePasse : String
+    - telephone : String
+    - dateNaissance : Date
+    - genre : String
+    - ville : String
+    - maladie : String
+    - difficultes : String
+    - preferencePresence : Boolean
+    - preferenceCommunication : String
+    - codeVerification : String
+    - statutCompte : String
+    - dateInscription : Date
+
+    + getNom() : String
+    + setNom(nom : String)
+    + getPrenom() : String
+    + setPrenom(prenom : String)
+    + getEmail() : String
+    + setEmail(email : String)
+    + getMotDePasse() : String
+    + setMotDePasse(motDePasse : String)
+    + getTelephone() : String
+    + setTelephone(telephone : String)
+    + getDateNaissance() : Date
+    + setDateNaissance(dateNaissance : Date)
+    + getGenre() : String
+    + setGenre(genre : String)
+    + getVille() : String
+    + setVille(ville : String)
+    + getMaladie() : String
+    + setMaladie(maladie : String)
+    + getDifficultes() : String
+    + setDifficultes(difficultes : String)
+    + getPreferencePresence() : Boolean
+    + setPreferencePresence(preferencePresence : Boolean)
+    + getPreferenceCommunication() : String
+    + setPreferenceCommunication(preferenceCommunication : String)
+    + getCodeVerification() : String
+    + setCodeVerification(codeVerification : String)
+    + getStatutCompte() : String
+    + setStatutCompte(statutCompte : String)
+    + getDateInscription() : Date
+    + setDateInscription(dateInscription : Date)
+}
+ '/
+class Utilisateur {
+    - niveauLangue : String
+    - difficulteTest : String
+    + getNiveauLangue() : String
+    + setNiveauLangue(niveauLangue : String)
+    + getDifficulteTest() : String
+    + setDifficulteTest(difficulteTest : String)
+}
+
+class Orthophoniste {
+    - nom : String
+    - prenom : String
+    - email : String
+    - motDePasse : String
+    - statutCompte : String
+    - dateInscription : Date
+    - nombreHeuresTravail : int
+    - listePatients : Patient
+
+    + getNom() : String
+    + setNom(nom : String)
+    + getPrenom() : String
+    + setPrenom(prenom : String)
+    + getEmail() : String
+    + setEmail(email : String)
+    + getMotDePasse() : String
+    + setMotDePasse(motDePasse : String)
+    + getStatutCompte() : String
+    + setStatutCompte(statutCompte : String)
+    + getDateInscription() : Date
+    + setDateInscription(dateInscription : Date)
+    + getNombreHeuresTravail() : int
+    + setNombreHeuresTravail(nombreHeures : int)
+    + getListePatients() : Patient
+    + setListePatients(listePatients : Patient)
+}
+
+class Patient {
+    - difficultesRencontrees : String
+    - niveauApprentissage : String
+    - orthophonistesAssocies : Orthophoniste
+    + getDifficultesRencontrees() : String
+    + setDifficultesRencontrees(difficultesRencontrees : String)
+    + getNiveauApprentissage() : String
+    + setNiveauApprentissage(niveauApprentissage : String)
+    + getOrthophonistesAssocies() : Orthophoniste
+    + setOrthophonistesAssocies(orthophonistesAssocies : Orthophoniste)
+}
+
+class Administrateur {
+    - nom : String
+    - prenom : String
+    - email : String
+    - motDePasse : String
+    - statutCompte : String
+
+    + getNom() : String
+    + setNom(nom : String)
+    + getPrenom() : String
+    + setPrenom(prenom : String)
+    + getEmail() : String
+    + setEmail(email : String)
+    + getMotDePasse() : String
+    + setMotDePasse(motDePasse : String)
+    + getStatutCompte() : String
+    + setStatutCompte(statutCompte : String)
+}
+
+class Jeu {
+    - id : int
+    - type : String
+    - description : String
+    - participants : Patient
+    + getId() : int
+    + setId(id : int)
+    + getType() : String
+    + setType(type : String)
+    + getDescription() : String
+    + setDescription(description : String)
+    + getParticipants() : Patient
+    + setParticipants(participants : Patient)
+}
+
+class ExercicePersonnalise {
+    - id : int
+    - contenu : String
+    - patientAssocie : Patient
+    - orthophonisteAssocie : Orthophoniste
+    + getId() : int
+    + setId(id : int)
+    + getContenu() : String
+    + setContenu(contenu : String)
+    + getPatientAssocie() : Patient
+    + setPatientAssocie(patientAssocie : Patient)
+    + getOrthophonisteAssocie() : Orthophoniste
+    + setOrthophonisteAssocie(orthophonisteAssocie : Orthophoniste)
+}
+
+class Compte {
+    - photo : String
+    - historiqueExercices : ExercicePersonnalise
+    - historiqueJeux : Jeu
+    + getPhoto() : String
+    + setPhoto(photo : String)
+    + getHistoriqueExercices() : ExercicePersonnalise
+    + setHistoriqueExercices(historiqueExercices : ExercicePersonnalise)
+    + getHistoriqueJeux() : Jeu
+    + setHistoriqueJeux(historiqueJeux : Jeu)
+}
+
+Utilisateur <|-- Orthophoniste
+Utilisateur <|-- Patient
+Orthophoniste <|-- Administrateur 
+Patient <|-- Administrateur 
+Orthophoniste "1" -- "0..*" Patient : associe
+Patient "0..*" -- "0..*" Jeu : participe
+Patient "1" -- "0..*" ExercicePersonnalise : a
+Compte "1" -- "0..*" ExercicePersonnalise : contient
+Compte "1" -- "0..*" Jeu : contient
+
+@enduml
