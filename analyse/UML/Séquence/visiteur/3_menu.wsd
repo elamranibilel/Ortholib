@@ -1,0 +1,7 @@
+@startuml Menu
+actor Visiteur
+participant Menu
+
+Visiteur -> Menu : Ouvrir le menu
+Menu --> Visiteur : Affiche les options du menu (Inscription, Connexion, Présentation, Contact)
+@enduml

@@ -1,0 +1,7 @@
+@startuml Accueil
+actor Visiteur
+participant PageAccueil
+
+Visiteur -> PageAccueil : Ouvrir le site dans le navigateur
+PageAccueil --> Visiteur : Affiche la page d'accueil avec le menu, la vidéo et le texte de présentation
+@enduml

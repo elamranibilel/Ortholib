@@ -1,0 +1,9 @@
+@startuml contact
+actor Visiteur
+participant PageContact
+actor Administrateur as admin 
+
+Visiteur -> PageContact : Accéder à la page de contact
+PageContact -> Visiteur : Affiche le formulaire de contact
+Visiteur --> admin : envoyer le formulaire complet
+@enduml

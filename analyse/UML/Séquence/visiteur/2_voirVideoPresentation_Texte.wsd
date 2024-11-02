@@ -1,0 +1,9 @@
+@startuml VideoPresentation
+actor Visiteur
+participant PageAccueil
+entity Video
+
+Visiteur -> PageAccueil : Accéder à la page d'accueil
+PageAccueil -> Video : Charger la vidéo de présentation
+Video --> Visiteur : Afficher la vidéo et le texte de présentation
+@enduml
