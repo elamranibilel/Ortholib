@@ -1,0 +1,24 @@
+@startuml consulter_modifier_Patient
+
+actor Orthophoniste
+participant Système
+actor Patient
+
+Orthophoniste -> Système: Accéder à la liste des patients
+Système --> Orthophoniste: Affiche la liste des patients
+
+Orthophoniste -> Système: Sélectionner un patient pour consulter le profil
+Système --> Orthophoniste: Affiche le profil du patient
+
+Orthophoniste -> Système: Modifier les informations du profil
+Système -> Système: Valider et enregistrer les modifications
+
+Système -> Patient: Alerter la mise à jour
+
+alt Modification valide
+    Système --> Orthophoniste: Confirmation de la mise à jour
+else Erreur de modification
+    Système --> Orthophoniste: Affiche message d'erreur
+end
+
+@enduml

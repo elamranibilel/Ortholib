@@ -1,0 +1,23 @@
+@startuml Suivre_Progres_Noter_Seance
+
+actor Orthophoniste
+participant Système
+participant Patient
+
+Orthophoniste -> Système: Accéder au profil du patient
+Système --> Orthophoniste: Affiche le profil du patient et les progrès
+
+Orthophoniste -> Système: Consulter les résultats des séances/exercices
+
+Orthophoniste -> Système: Entrer la note de progression et commentaire
+Système -> Système: Enregistrer la progression
+
+Système -> Patient: Afficher les notes et des commentaire
+
+alt Enregistrement réussi
+    Système --> Orthophoniste: Confirmation de la progression enregistrée
+else Erreur d’enregistrement
+    Système --> Orthophoniste: Affiche message d’erreur
+end
+
+@enduml

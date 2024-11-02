@@ -1,6 +1,6 @@
 @startuml Class
 
-/' class Visiteur {
+class Utilisateur {
     - nom : String
     - prenom : String
     - email : String
@@ -9,13 +9,9 @@
     - dateNaissance : Date
     - genre : String
     - ville : String
-    - maladie : String
-    - difficultes : String
-    - preferencePresence : Boolean
-    - preferenceCommunication : String
-    - codeVerification : String
     - statutCompte : String
     - dateInscription : Date
+    
 
     + getNom() : String
     + setNom(nom : String)
@@ -33,48 +29,10 @@
     + setGenre(genre : String)
     + getVille() : String
     + setVille(ville : String)
-    + getMaladie() : String
-    + setMaladie(maladie : String)
-    + getDifficultes() : String
-    + setDifficultes(difficultes : String)
-    + getPreferencePresence() : Boolean
-    + setPreferencePresence(preferencePresence : Boolean)
-    + getPreferenceCommunication() : String
-    + setPreferenceCommunication(preferenceCommunication : String)
-    + getCodeVerification() : String
-    + setCodeVerification(codeVerification : String)
     + getStatutCompte() : String
     + setStatutCompte(statutCompte : String)
     + getDateInscription() : Date
     + setDateInscription(dateInscription : Date)
-}
- '/
-class Utilisateur {
-    - nom : String
-    - prenom : String
-    - email : String
-    - motDePasse : String
-    - statutCompte : String
-    - dateInscription : Date
-    - niveauLangue : String
-    - difficulteTest : String
-
-    + getNom() : String
-    + setNom(nom : String)
-    + getPrenom() : String
-    + setPrenom(prenom : String)
-    + getEmail() : String
-    + setEmail(email : String)
-    + getMotDePasse() : String
-    + setMotDePasse(motDePasse : String)
-    + getStatutCompte() : String
-    + setStatutCompte(statutCompte : String)
-    + getDateInscription() : Date
-    + setDateInscription(dateInscription : Date)
-    + getNiveauLangue() : String
-    + setNiveauLangue(niveauLangue : String)
-    + getDifficulteTest() : String
-    + setDifficulteTest(difficulteTest : String)
 }
 
 class Orthophoniste {
@@ -88,13 +46,34 @@ class Orthophoniste {
 }
 
 class Patient {
+    - niveauLangue : String
+    - difficulteTest : String
     - difficultesRencontrees : String
     - niveauApprentissage : String
+    - maladie : String
+    - preferencePresence : Boolean
+    - preferenceCommunication : String
+    - codeVerification : String
     - orthophonistesAssocies : Orthophoniste
+
+    + getNiveauLangue() : String
+    + setNiveauLangue(niveauLangue : String)
+    + getDifficulteTest() : String
+    + setDifficulteTest(difficulteTest : String)
     + getDifficultesRencontrees() : String
     + setDifficultesRencontrees(difficultesRencontrees : String)
     + getNiveauApprentissage() : String
     + setNiveauApprentissage(niveauApprentissage : String)
+    + getMaladie() : String
+    + setMaladie(maladie : String)
+    + getDifficultes() : String
+    + setDifficultes(difficultes : String)
+    + getPreferencePresence() : Boolean
+    + setPreferencePresence(preferencePresence : Boolean)
+    + getPreferenceCommunication() : String
+    + setPreferenceCommunication(preferenceCommunication : String)
+    + getCodeVerification() : String
+    + setCodeVerification(codeVerification : String)
     + getOrthophonistesAssocies() : Orthophoniste
     + setOrthophonistesAssocies(orthophonistesAssocies : Orthophoniste)
 }
@@ -174,6 +153,6 @@ Patient "0..*" -- "0..*" Jeu : participe
 Patient "1" -- "0..*" ExercicePersonnalise : a
 Compte "1" -- "0..*" ExercicePersonnalise : contient
 Compte "1" -- "0..*" Jeu : contient
-Compte "1" -- "1" : contient
+Compte "1" -- "1" Utilisateur : contient
 
 @enduml

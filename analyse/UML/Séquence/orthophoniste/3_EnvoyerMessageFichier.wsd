@@ -1,0 +1,22 @@
+@startuml Envoyer_Message_Fichier
+
+actor Orthophoniste
+participant Système
+actor Patient
+
+Orthophoniste -> Système: Accéder à la messagerie du patient
+Système --> Orthophoniste: Affiche la messagerie
+
+Orthophoniste -> Système: Rédiger message ou sélectionner fichier
+Orthophoniste -> Système: Envoyer message ou fichier
+
+Système -> Système: Valider l’envoi
+
+alt Envoi réussi
+    Système -> Patient: Notification de nouveau message par email/SMS
+    Système --> Orthophoniste: Confirmation d’envoi réussi
+else Erreur d’envoi
+    Système --> Orthophoniste: Affiche message d’erreur
+end
+
+@enduml
