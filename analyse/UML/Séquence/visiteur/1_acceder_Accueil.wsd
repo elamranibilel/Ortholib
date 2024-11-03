@@ -3,5 +3,7 @@ actor Visiteur
 participant PageAccueil
 
 Visiteur -> PageAccueil : Ouvrir le site dans le navigateur
+activate PageAccueil
 PageAccueil --> Visiteur : Affiche la page d'accueil avec le menu, la vidéo et le texte de présentation
+deactivate PageAccueil
 @enduml

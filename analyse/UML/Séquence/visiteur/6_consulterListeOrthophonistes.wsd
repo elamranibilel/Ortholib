@@ -1,0 +1,16 @@
+@startuml Liste_Orthophoniste
+
+actor Visiteur
+participant PageOrthophonistes
+database BaseDeDonnees
+
+Visiteur -> PageOrthophonistes : Accéder à la liste des orthophonistes
+activate PageOrthophonistes
+PageOrthophonistes -> BaseDeDonnees : Récupérer la liste des orthophonistes
+activate BaseDeDonnees
+BaseDeDonnees --> PageOrthophonistes : Retourne la liste des orthophonistes
+deactivate BaseDeDonnees
+PageOrthophonistes --> Visiteur : Affiche la liste des orthophonistes
+deactivate PageOrthophonistes
+
+@enduml

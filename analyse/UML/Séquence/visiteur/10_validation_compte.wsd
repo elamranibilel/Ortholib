@@ -1,0 +1,20 @@
+@startuml ValidationCompte
+actor Utilisateur
+participant ValidationCompte
+database BaseDeDonnees
+participant SystemeEmail
+
+Utilisateur -> ValidationCompte : Accéder à la page de validation de compte
+activate ValidationCompte
+ValidationCompte -> SystemeEmail : Envoi du code de validation par email
+activate SystemeEmail
+SystemeEmail --> Utilisateur : Réception du code de validation
+deactivate SystemeEmail
+Utilisateur -> ValidationCompte : Saisie du code de validation
+ValidationCompte -> BaseDeDonnees : Vérifie et active le compte
+activate BaseDeDonnees
+BaseDeDonnees --> ValidationCompte : Confirmation d'activation du compte
+deactivate BaseDeDonnees
+ValidationCompte --> Utilisateur : Féliciter vous êtes définitivement devenu utilisateur
+deactivate ValidationCompte
+@enduml

@@ -3,5 +3,7 @@ actor Visiteur
 participant Menu
 
 Visiteur -> Menu : Ouvrir le menu
+activate Menu
 Menu --> Visiteur : Affiche les options du menu (Inscription, Connexion, Présentation, Contact)
+deactivate Menu
 @enduml

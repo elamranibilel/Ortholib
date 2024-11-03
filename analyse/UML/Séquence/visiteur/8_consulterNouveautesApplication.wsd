@@ -1,0 +1,14 @@
+@startuml NouveautésApplication
+actor Visiteur
+participant PageNouveautes
+database BaseDeDonnees
+
+Visiteur -> PageNouveautes : Accéder aux nouveautés
+activate PageNouveautes
+PageNouveautes -> BaseDeDonnees : Récupérer les nouveautés de l'application
+activate BaseDeDonnees
+BaseDeDonnees --> PageNouveautes : Retourne les nouveautés
+deactivate BaseDeDonnees
+PageNouveautes --> Visiteur : Affiche les nouveautés
+deactivate PageNouveautes
+@enduml

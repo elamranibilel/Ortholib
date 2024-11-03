@@ -1,0 +1,16 @@
+@startuml inscription
+actor Visiteur
+participant PageInscription
+database BaseDeDonnees
+
+Visiteur -> PageInscription : Accéder à la page d'inscription
+activate PageInscription
+PageInscription --> Visiteur : Affiche le formulaire d'inscription
+Visiteur -> PageInscription : Soumet le formulaire avec ses informations
+PageInscription -> BaseDeDonnees : Enregistre les informations d'inscription
+activate BaseDeDonnees
+BaseDeDonnees --> PageInscription : Confirme l'enregistrement
+deactivate BaseDeDonnees
+PageInscription --> Visiteur : Affiche le message de confirmation
+deactivate PageInscription
+@enduml

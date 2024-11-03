@@ -1,9 +1,14 @@
 @startuml VideoPresentation
 actor Visiteur
 participant PageAccueil
-entity Video
+database BaseDeDonnees
 
 Visiteur -> PageAccueil : Accéder à la page d'accueil
-PageAccueil -> Video : Charger la vidéo de présentation
-Video --> Visiteur : Afficher la vidéo et le texte de présentation
+activate PageAccueil
+PageAccueil -> BaseDeDonnees : Charger la vidéo de présentation
+activate BaseDeDonnees
+BaseDeDonnees --> PageAccueil : charger la vidéo et le texte de présentation est confirmé
+deactivate BaseDeDonnees
+PageAccueil --> Visiteur : Afficher la vidéo et le texte
+deactivate PageAccueil
 @enduml

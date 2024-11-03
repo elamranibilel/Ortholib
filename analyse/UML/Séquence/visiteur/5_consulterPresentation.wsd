@@ -1,0 +1,11 @@
+@startuml Présentation
+
+actor Visiteur
+participant PagePresentation
+
+Visiteur -> PagePresentation : Accéder à la page de présentation
+activate PagePresentation
+PagePresentation --> Visiteur : Affiche les informations de présentation de l'application
+deactivate PagePresentation
+
+@enduml

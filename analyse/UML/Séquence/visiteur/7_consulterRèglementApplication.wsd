@@ -1,0 +1,9 @@
+@startuml RèglementApplication
+actor Visiteur
+participant PageReglement
+
+Visiteur -> PageReglement : Accéder à la page de règlement
+activate PageReglement
+PageReglement --> Visiteur : Affiche le règlement de l'application
+deactivate PageReglement
+@enduml
