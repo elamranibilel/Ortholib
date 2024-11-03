@@ -1,0 +1,20 @@
+@startuml Connexion
+
+actor Utilisateur
+participant "Interface Utilisateur" as UI
+participant "Service d'Authentification" as Auth
+participant "Base de Données" as DB
+
+Utilisateur -> UI : Saisir identifiant et mot de passe
+UI -> Auth : Envoyer informations d'identification
+Auth -> DB : Vérifier identifiant et mot de passe
+DB --> Auth : Résultat de la vérification
+
+alt Identifiants valides
+    Auth -> UI : Afficher l'espace personnel
+    UI --> Utilisateur : Connexion réussie
+else Identifiants invalides
+    Auth -> UI : Afficher message d'erreur
+    UI --> Utilisateur : Échec de la connexion
+end
+@enduml

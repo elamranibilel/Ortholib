@@ -1,0 +1,15 @@
+@startuml Proposition_Test
+actor Utilisateur
+participant "Interface Utilisateur" as UI
+participant "Service de Test" as TestService
+
+Utilisateur -> UI : Se connecter
+UI -> TestService : Proposer de passer un test de difficultés
+alt Utilisateur accepte
+    TestService -> UI : Afficher instructions pour passer le test
+    UI --> Utilisateur : Instructions de test
+else Utilisateur refuse
+    TestService -> UI : Afficher message de confirmation de refus
+    UI --> Utilisateur : Refus confirmé
+end
+@enduml
