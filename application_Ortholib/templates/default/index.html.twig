@@ -1,20 +1,46 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DefaultController!{% endblock %}
+{% block title %}
+    Hello DefaultController!
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <main>
+        <section>
+            <h2>
+                Explication et Présentation de l'Ortholib :
+            </h2>
+            <div>
+                <video controls>
+                    <source src="" type="video/mp4">
+                        Votre navigateur ne supporte pas la vidéo.
+                    </video>
+                </div>
+                <p>
+                    TEXTE
+                </p>
+            </section>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/wamp64/www/Projets_professionnels/Ortholib/application_Ortholib/src/Controller/DefaultController.php</code></li>
-        <li>Your template at <code>C:/wamp64/www/Projets_professionnels/Ortholib/application_Ortholib/templates/default/index.html.twig</code></li>
-    </ul>
-</div>
-{% endblock %}
+            <!-- Liens supplémentaires -->
+            <section>
+                <ul>
+                    <li>
+                        <a href="{{ path('app_nouveautes') }}">
+                            Nouveautés
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('app_reglement_application') }}">
+                            Règlement de l’application
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('app_liste_orthophoniste') }}">
+                            Listes des Orthophonistes
+                        </a>
+                    </li>
+                </ul>
+            </section>
+        </main>
+    {% endblock %}
+    
