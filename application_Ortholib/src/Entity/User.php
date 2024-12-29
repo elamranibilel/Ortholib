@@ -3,11 +3,16 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\InheritanceType('SINGLE_TABLE')] // Héritage par table unique
+#[ORM\DiscriminatorColumn(name: 'type', type: 'string')] // Colonne pour différencier les types
+#[ORM\DiscriminatorMap(['user' => User::class, 'orthophoniste' => Orthophoniste::class, 'patient' => Patient::class])] // Mapping des sous-classes
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -48,6 +53,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255)]
     private ?string $ville = null;
+
+    /**
+     * @var Collection<int, Score>
+     */
+    #[ORM\OneToMany(targetEntity: Score::class, mappedBy: 'user', orphanRemoval: true)]
+    private Collection $scoresUser;
+
+    public function __construct()
+    {
+        $this->scoresUser = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -192,6 +208,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setVille(string $ville): static
     {
         $this->ville = $ville;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Score>
+     */
+    public function getScoresUser(): Collection
+    {
+        return $this->scoresUser;
+    }
+
+    public function addScoresUser(Score $scoresUser): static
+    {
+        if (!$this->scoresUser->contains($scoresUser)) {
+            $this->scoresUser->add($scoresUser);
+            $scoresUser->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeScoresUser(Score $scoresUser): static
+    {
+        if ($this->scoresUser->removeElement($scoresUser)) {
+            // set the owning side to null (unless already changed)
+            if ($scoresUser->getUser() === $this) {
+                $scoresUser->setUser(null);
+            }
+        }
 
         return $this;
     }

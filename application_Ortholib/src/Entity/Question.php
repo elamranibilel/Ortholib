@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\QuestionRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -16,90 +14,68 @@ class Question
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $texte = null;
+    #[ORM\Column(length: 255)]
+    private ?string $content = null;
 
-    #[ORM\Column]
-    private ?int $level = null;
+    #[ORM\Column(length: 255)]
+    private ?string $type = null;
 
-    #[ORM\OneToMany(mappedBy: 'question', targetEntity: Choice::class)]
-    private Collection $choice;
+    #[ORM\Column(type: Types::ARRAY)]
+    private array $options = [];
 
-    #[ORM\ManyToOne(inversedBy: 'niveau')]
-    private ?User $userLevel = null;
-
-    public function __construct()
-    {
-        $this->choice = new ArrayCollection();
-    }
+    #[ORM\ManyToOne(inversedBy: 'question')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Game $gameQuestion = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getTexte(): ?string
+    public function getContent(): ?string
     {
-        return $this->texte;
+        return $this->content;
     }
 
-    public function setTexte(string $texte): static
+    public function setContent(string $content): static
     {
-        $this->texte = $texte;
+        $this->content = $content;
 
         return $this;
     }
 
-    public function getLevel(): ?int
+    public function getType(): ?string
     {
-        return $this->level;
+        return $this->type;
     }
 
-    public function setLevel(int $level): static
+    public function setType(string $type): static
     {
-        $this->level = $level;
+        $this->type = $type;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, Choice>
-     */
-    public function getChoice(): Collection
+    public function getOptions(): array
     {
-        return $this->choice;
+        return $this->options;
     }
 
-    public function addChoice(Choice $choice): static
+    public function setOptions(array $options): static
     {
-        if (!$this->choice->contains($choice)) {
-            $this->choice->add($choice);
-            $choice->setQuestion($this);
-        }
+        $this->options = $options;
 
         return $this;
     }
 
-    public function removeChoice(Choice $choice): static
+    public function getGameQuestion(): ?Game
     {
-        if ($this->choice->removeElement($choice)) {
-            // set the owning side to null (unless already changed)
-            if ($choice->getQuestion() === $this) {
-                $choice->setQuestion(null);
-            }
-        }
-
-        return $this;
+        return $this->gameQuestion;
     }
 
-    public function getUserLevel(): ?User
+    public function setGameQuestion(?Game $gameQuestion): static
     {
-        return $this->userLevel;
-    }
-
-    public function setUserLevel(?User $userLevel): static
-    {
-        $this->userLevel = $userLevel;
+        $this->gameQuestion = $gameQuestion;
 
         return $this;
     }
