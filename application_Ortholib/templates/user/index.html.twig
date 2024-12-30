@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des utilisateurs{% endblock %}
+
+{% block body %}
+<h1>Liste des utilisateurs</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in entities %}
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.nom }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+                <a href="{{ path('app_user_edit', {'id': user.id}) }}">Modifier</a>
+                <a href="{{ path('app_user_delete', {'id': user.id}) }}">Supprimer</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="pagination">
+    {{ knp_pagination_render(entities) }}
+</div>
+{% endblock %}

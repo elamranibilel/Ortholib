@@ -67,7 +67,6 @@ class GameFixtures extends Fixture
             $manager->persist($question);
         }
 
-        // Enregistrement des données
         $manager->flush();
     }
 }
