@@ -26,6 +26,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 #[Route('/admin')]
 class UserController extends AbstractController
 {
+    #[Route('/', name: 'app_admin')]
     private function listEntities($repository, Request $request, PaginatorInterface $paginator, string $view): Response
     {
         $query = $repository->findAll();
@@ -78,17 +79,12 @@ class UserController extends AbstractController
             return $this->redirectToRoute('app_user');
         }
 
-        return $this->render('user/edit.html.twig', ['form' => $form->createView()]);
+        return $this->render('user/edit.html.twig', ['formCreateUtilisateur' => $form->createView()]);
     }
 
     #[Route('/user/delete/{id}', name: 'app_user_delete', methods: ['POST'])]
-    public function deleteUser(
-        int $id,
-        Request $request,
-        EntityManagerInterface $manager,
-        CsrfTokenManagerInterface $csrfManager,
-        UserRepository $userRepo
-    ): Response {
+    public function deleteUser(int $id, Request $request, EntityManagerInterface $manager, CsrfTokenManagerInterface $csrfManager, UserRepository $userRepo): Response
+    {
         $token = $request->request->get('_token');
 
         if (!$csrfManager->isTokenValid(new CsrfToken('delete' . $id, $token))) {
