@@ -82,6 +82,34 @@ class UserController extends AbstractController
         return $this->render('user/edit.html.twig', ['formCreateUtilisateur' => $form->createView()]);
     }
 
+    #[Route('user/trie/id', name: 'app_user_trie_id', methods: ['GET'])]
+    public function trieUtilisateurID(Request $request, PaginatorInterface $paginator, UtilisateurRepository $utilisateurRepo): Response
+    {
+        $query = $utilisateurRepo->trieUtilisateurID();
+        $users = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            10
+        );
+        return $this->render('utilisateur/index.html.twig', [
+            'users' => $users,
+        ]);
+    }
+
+    #[Route('user/trie/nom', name: 'app_user_trie_nom', methods: ['GET'])]
+    public function trieUtilisateurNom(Request $request, PaginatorInterface $paginator, UtilisateurRepository $utilisateurRepo): Response
+    {
+        $query = $utilisateurRepo->trieUtilisateurNom();
+        $users = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            10
+        );
+        return $this->render('utilisateur/index.html.twig', [
+            'users' => $users,
+        ]);
+    }
+
     #[Route('/user/delete/{id}', name: 'app_user_delete', methods: ['POST'])]
     public function deleteUser(int $id, Request $request, EntityManagerInterface $manager, CsrfTokenManagerInterface $csrfManager, UserRepository $userRepo): Response
     {

@@ -1,0 +1,133 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+Détails de l'user
+{% endblock %}
+{% block body %}
+<div class="container mt-5">
+    <h1 class="text-center text-primary mb-4">
+        Détails de l'Utilisateur
+    </h1>
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead class="bg-dark text-white">
+                    <tr>
+                        <th scope="col">
+                            Champ
+                        </th>
+                        <th scope="col">
+                            Détails
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row" class="bg-light">
+                            Id
+                        </th>
+                        <td>
+                            {{ user.id }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="bg-light">
+                            Nom
+                        </th>
+                        <td>
+                            {{ user.nom }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="bg-light">
+                            Prénom
+                        </th>
+                        <td>
+                            {{ user.prenom }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="bg-light">
+                            Ville
+                        </th>
+                        <td>
+                            {{ user.ville }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="bg-light">
+                            Genre
+                        </th>
+                        <td>
+                            {{ user.genre }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="bg-light">
+                            Date de Naissance
+                        </th>
+                        <td>
+                            {{ user.createdAt | date('d/m/Y') }}
+                        </td>
+                    </tr>
+                    {# <tr>
+                        <th scope="row" class="bg-light">
+                            Login
+                        </th>
+                        <td>
+                            {{ user.login }}
+                        </td>
+                    </tr> #}
+                    <tr>
+                        <th scope="row" class="bg-light">
+                            Email
+                        </th>
+                        <td>
+                            {{ user.email }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="bg-light">
+                            Mot de passe
+                        </th>
+                        <td>
+                            {{ user.password }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="bg-light">
+                            Téléphone
+                        </th>
+                        <td>
+                            {{ user.telephone }}
+                        </td>
+                    </tr>
+                    {# <tr>
+                        <th scope="row" class="bg-light">
+                            Image
+                        </th>
+                        <td>
+                            {% for image in user.imagesuser %}
+                            <div class="col-md-6 d-flex mb-3">
+                                <img src="{{ asset('uploads/images/' ~ image.name) }}" alt="Image de {{ user.nom }}"
+                                    class="img-fluid rounded">
+                            </div>
+                            {% endfor %}
+                        </td>
+                    </tr> #}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center mt-4">
+        <a href="{{ path('app_user') }}" class="btn btn-primary me-3">
+            Retour
+        </a>
+        <a href="{{ path('app_user_edit', {'id': user.id}) }}" class="btn btn-warning me-3">
+            Modifier
+        </a>
+        {{ include('user/delete.html.twig', { user: user }) }}
+    </div>
+</div>
+<br>
+<br>
+{% endblock %}
