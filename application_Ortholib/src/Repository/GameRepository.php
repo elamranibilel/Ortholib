@@ -2,39 +2,39 @@
 
 namespace App\Repository;
 
-use App\Entity\Question;
+use App\Entity\Game;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Question>
+ * @extends ServiceEntityRepository<Game>
  */
-class QuestionRepository extends ServiceEntityRepository
+class GameRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Question::class);
+        parent::__construct($registry, Game::class);
     }
 
     //    /**
-    //     * @return Question[] Returns an array of Question objects
+    //     * @return Game[] Returns an array of Game objects
     //     */
     //    public function findByExampleField($value): array
     //    {
-    //        return $this->createQueryBuilder('q')
-    //            ->andWhere('q.exampleField = :val')
+    //        return $this->createQueryBuilder('g')
+    //            ->andWhere('g.exampleField = :val')
     //            ->setParameter('val', $value)
-    //            ->orderBy('q.id', 'ASC')
+    //            ->orderBy('g.id', 'ASC')
     //            ->setMaxResults(10)
     //            ->getQuery()
     //            ->getResult()
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Question
+    //    public function findOneBySomeField($value): ?Game
     //    {
-    //        return $this->createQueryBuilder('q')
-    //            ->andWhere('q.exampleField = :val')
+    //        return $this->createQueryBuilder('g')
+    //            ->andWhere('g.exampleField = :val')
     //            ->setParameter('val', $value)
     //            ->getQuery()
     //            ->getOneOrNullResult()

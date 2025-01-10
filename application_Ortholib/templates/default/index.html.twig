@@ -1,46 +1,46 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    Hello DefaultController!
+Hello DefaultController!
 {% endblock %}
 
 {% block body %}
-    <main>
-        <section>
-            <h2>
-                Explication et Présentation de l'Ortholib :
-            </h2>
-            <div>
-                <video controls>
-                    <source src="" type="video/mp4">
-                        Votre navigateur ne supporte pas la vidéo.
-                    </video>
-                </div>
-                <p>
-                    TEXTE
-                </p>
-            </section>
-
-            <!-- Liens supplémentaires -->
-            <section>
-                <ul>
-                    <li>
-                        <a href="{{ path('app_nouveautes') }}">
-                            Nouveautés
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ path('app_reglement_application') }}">
-                            Règlement de l’application
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ path('app_liste_orthophoniste') }}">
-                            Listes des Orthophonistes
-                        </a>
-                    </li>
-                </ul>
-            </section>
-        </main>
-    {% endblock %}
-    
+<main>
+    <section class="my-4">
+        <ul class="list-inline text-center">
+            <li class="list-inline-item mx-3">
+                <a href="{{ path('app_nouveautes') }}" class="text-decoration-none text-dark">
+                    <img src="/img/new.png" alt="Nouveautés" class="rounded-circle" style="width: 80px; height: 80px;">
+                    <div class="mt-2">Nouveautés</div>
+                </a>
+            </li>
+            <li class="list-inline-item mx-3">
+                <a href="#" class="text-decoration-none text-dark">
+                    <img src="/img/personnalise.png" alt="Suivi Personnalisé" class="rounded-circle"
+                        style="width: 80px; height: 80px;">
+                    <div class="mt-2 text-decoration-none">Suivi Personnalisé</div>
+                </a>
+            </li>
+            <li class="list-inline-item mx-3">
+                <a href="{{ path('app_liste_orthophoniste') }}" class="text-decoration-none text-dark">
+                    <img src="/img/listeOrthophonistes.webp" alt="Listes des Orthophonistes" class="rounded-circle"
+                        style="width: 80px; height: 80px;">
+                    <div class="mt-2">Listes des Orthophonistes</div>
+                </a>
+            </li>
+        </ul>
+    </section>
+    <br>
+    <section>
+        <div>
+            <video controls>
+                <source src="" type="video/mp4">
+                Votre navigateur ne supporte pas la vidéo.
+            </video>
+        </div>
+        <p>
+            TEXTE
+        </p>
+    </section>
+</main>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h1>{{ game.name|escape }}</h1>
+<p>{{ game.description|escape }}</p>
+
+{% for question in game.question %}
+<div>
+    <p>{{ question.content|escape }}</p>
+    {% for key, value in question.options %}
+    <button>{{ key|escape }}</button>
+    {% endfor %}
+</div>
+{% endfor %}
+
+{% if level is defined %}
+<div id="timer">Temps restant : {{ level.timeLimit }} secondes</div>
+<script>
+    let timeLeft = {{ level.timeLimit }};
+    const timerElement = document.getElementById('timer');
+
+    if (timerElement) {
+        const timer = setInterval(() => {
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                alert("Temps écoulé !");
+            } else {
+                timeLeft--;
+                timerElement.textContent = "Temps restant : " + timeLeft + " secondes";
+            }
+        }, 1000);
+    }
+</script>
+{% else %}
+<p>Aucun niveau défini pour ce jeu.</p>
+{% endif %}
+
+{% endblock %}
