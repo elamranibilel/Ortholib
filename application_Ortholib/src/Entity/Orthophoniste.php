@@ -6,7 +6,7 @@ use App\Repository\OrthophonisteRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: OrthophonisteRepository::class)]
-class Orthophoniste extends Utilisateur
+class Orthophoniste
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
