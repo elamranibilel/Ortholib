@@ -1,0 +1,43 @@
+@startuml
+title Diagramme fonctionnel - Application Ortholib
+
+start
+:Inscription sur le site;
+:Formulaire d'inscription (nom, prénom, email, etc.);
+:Validation de l'email envoyé;
+:Activation du compte;
+
+if (Compte activé ?) then (oui)
+    :Connexion (email et mot de passe);
+    :Validation par code envoyé par email;
+    if (Code validé ?) then (oui)
+        :Proposition de passer un test;
+        if (Choix de passer le test ?) then (Ne pas passer le test)
+            :Reproposer le test avec explication;
+        else (Passer le test)
+            :Test de 10 questions;
+            :Résultats enregistrés et affichés;
+        endif
+
+        if (Difficultés renseignées ?) then (oui)
+            :Accès direct à l'application;
+        else (non)
+            :Accès restreint, passage par le test conseillé;
+        endif
+
+        :Choix de l'orthophoniste (1 à 3);
+        if (Orthophoniste disponible ?) then (oui)
+            :Accès à l'espace personnel;
+        else (non)
+            :Calcul de la distance vers un orthophoniste disponible (API Google Maps);
+        endif
+        :Consultation des résultats, exercices, jeux;
+    else (non)
+        :Erreur dans le code, reconfirmer;
+    endif
+else (non)
+    :Compte non activé, vérifier l'activation;
+endif
+
+stop
+@enduml
