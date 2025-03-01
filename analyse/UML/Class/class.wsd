@@ -43,31 +43,31 @@ class Administrateur {
 class Orthophoniste {
     - nombreHeureTravail : int
     - patients : Collection<Patient>
-    - cabinet : Collection<Cabinet>
+    - cabinet : Cabinet
     - imagesOrthophoniste : Collection<Image>
     - specialisation : String
     - seances : Collection<Seances>
     - exercices : Collection<Exercice>
 
     + getNombreHeureTravail() : int
-    + setNombreHeureTravail(nombreHeureTravail : int)
+    + setNombreHeureTravail(nombreHeureTravail : int) : void
     + getRoles() : Array
     + getPatients() : Collection<Patient>
-    + addPatient(patient : Patient)
-    + removePatient(patient : Patient)
-    + getCabinet() : Collection<Cabinet>
-    + setCabinet(cabinet : Collection<Cabinet>)
+    + addPatient(patient : Patient) : void
+    + removePatient(patient : Patient) : void
+    + getCabinet() : Cabinet
+    + setCabinet(cabinet : Cabinet) : void
     + getImagesOrthophoniste() : Collection<Image>
-    + addImageOrthophoniste(imagesOrthophoniste : Image)
-    + removeImageOrthophoniste(imagesOrthophoniste : Image)
+    + addImagesOrthophoniste(imagesOrthophoniste : Image) : void
+    + removeImagesOrthophoniste(imagesOrthophoniste : Image) : void
     + getSpecialisation() : String
-    + setSpecialisation(specialisation : String)
+    + setSpecialisation(specialisation : String) : void
     + getSeances() : Collection<Seances>
-    + addSeance(seances : Seances)
-    + removeSeance(seances : Seances)
+    + addSeances(seances : Seances) : void
+    + removeSeances(seances : Seances) : void
     + getExercices() : Collection<Exercice>
-    + addExercice(exercices : Exercice)
-    + removeExercice(exercices : Exercice)
+    + addExercices(exercices : Exercice) : void
+    + removeExercices(exercices : Exercice) : void
 }
 
 class Patient {
@@ -76,7 +76,7 @@ class Patient {
     - niveauApprentissage : String
     - deficient : String
     - difficulteRencontrees : Array
-    - choixOrtho : Collection<Orthophoniste>
+    - choixOrtho : Orthophoniste
     - imagesPatient : Collection<Image>
     - seances : Collection<Seances>
     - exercices : Collection<Exercice>
@@ -91,10 +91,10 @@ class Patient {
     + getDeficient() : String
     + setDeficient(deficient : String)
     + getRoles() : Array
-    + getDifficultesRencontrees() : Array
-    + setDifficultesRencontrees(difficultesRencontrees : Array)
-    + getChoixOrtho() : Collection<Orthophoniste>
-    + setChoixOrtho(choixOrtho : Collection<Orthophoniste>)
+    + getDifficulteRencontrees() : Array
+    + setDifficulteRencontrees(difficulteRencontrees : Array)
+    + getChoixOrtho() : Orthophoniste
+    + setChoixOrtho(choixOrtho : Orthophoniste)
     + getImagesPatient() : Collection<Image>
     + addImagesPatient(imagesPatient : Image)
     + removeImagesPatient(imagesPatient : Image)
@@ -136,8 +136,8 @@ class Exercice {
     - id : int
     - type : String
     - chronometre : Patient
-    - patient : Collection<Patient>
-    - orthophoniste : Collection<Orthophoniste>
+    - patient : Patient
+    - orthophoniste : Orthophoniste
     - signification : Collection<Signification>
     - resultatExercices : Collection<ResultatExercice>
 
@@ -146,10 +146,10 @@ class Exercice {
     + setType(type : String)
     + getChronometre() : int
     + setChronometre(chronometre : int)
-    + getPatient() : Collection<Patient>
-    + setPatient(patient : Collection<Patient>)
-    + getOrthophoniste() : Collection<Orthophoniste>
-    + setOrthophoniste(orthophoniste : Collection<Orthophoniste>)
+    + getPatient() : Patient
+    + setPatient(patient : Patient)
+    + getOrthophoniste() : Orthophoniste
+    + setOrthophoniste(orthophoniste : Orthophoniste)
     + getSignification() : Collection<Signification>
     + addSignification(signification : Signification)
     + removeSignification(signification : Signification)
@@ -161,33 +161,33 @@ class Exercice {
 class Image {
     - id : int
     - name : String
-    - cabinet : Collection<Cabinet>
-    - orthophoniste : Collection<Orthophoniste>
-    - patient : Collection<Patient>
+    - cabinet : Cabinet
+    - orthophoniste : Orthophoniste
+    - patient : Patient
 
     + getId() : int
     + getName() : String
     + setName(name : String)
-    + getCabinet() : Collection<Cabinet>
-    + setCabinet(cabinet : Collection<Cabinet>)
-    + getOrthophoniste() : Collection<Orthophoniste>
-    + setOrthophoniste(orthophoniste : Collection<Orthophoniste>)
-    + getPatient() : Collection<Patient>
-    + setPatient(patient : Collection<Patient>)
+    + getCabinet() : Cabinet
+    + setCabinet(cabinet : Cabinet)
+    + getOrthophoniste() : Orthophoniste
+    + setOrthophoniste(orthophoniste : Orthophoniste)
+    + getPatient() : Patient
+    + setPatient(patient : Patient)
 }
 
 class ResultatExercice {
     - id : int
-    - exercice : Collection<Exercice>
-    - patient : Collection<Patient>
+    - exercice : Exercice
+    - patient : Patient
     - score : int
     - date : DateTimeInterface
 
     + getId() : int
-    + getExercice() : Collection<Exercice>
-    + setExercice(exercice : Collection<Exercice>)
-    + getPatient() : Collection<Patient>
-    + setPatient(patient : Collection<Patient>)
+    + getExercice() : Exercice
+    + setExercice(exercice : Exercice)
+    + getPatient() : Patient
+    + setPatient(patient : Patient)
     + getScore() : int
     + setScore(score : int)
     + getDate() : DateTimeInterface
@@ -223,26 +223,38 @@ class Seances {
     + setExercices(exercices: string) : self
 }
 
-class Orthophoniste
-class Patient
+class Signification {
+    - id : int
+    - mots : String
+    - definition : Text 
+    - exercices : Collection<Exercice>
 
-Seances --> Orthophoniste : appartient à
-Seances --> Patient : appartient à
+    + getId() : int
+    + getMots() : String
+    + setMots(mots : String)
+    + getDefinition() : Text
+    + setDefinition(definition : Text)
+    + getExercices() : Collection<Exercice>
+    + addExercice(exercices : Exercice)
+    + removeExercice(exercices : Exercice)
+}
 
+User <|-- Orthophoniste
+User <|-- Patient
+User <|-- Administrateur
 
-Utilisateur <|-- Orthophoniste
-Utilisateur <|-- Patient
-Utilisateur <|-- Administrateur
-Utilisateur <|-- Secretaire
-
+Orthophoniste "1" -- "0..*" Seances : contient
+Patient "1" -- "0..*" Seances : contient
 Cabinet "1" -- "0..*" Orthophoniste : emploie
-Cabinet "1" -- "0..1" Secretaire : a
-
 Orthophoniste "1" -- "0..*" Patient : suit
-Patient "0..*" -- "0..*" Jeu : participe
-Patient "1" -- "0..*" ExercicePersonnalise : suit
-Compte "1" -- "0..*" ExercicePersonnalise : contient
-Compte "1" -- "0..*" Jeu : contient
-Compte "1" -- "1" Utilisateur : appartient à
+Seances "1" -- "0..*" Exercice : contient
+Patient "1" -- "0..*" Exercice : suit
+Exercice "0..*" -- "0..*" ResultatExercice : a
+Exercice "0..*" -- "0..*" Signification : contient
+Cabinet "1" -- "0..*" Image : contient
+Orthophoniste "1" -- "0..*" Image : contient
+Patient "1" -- "0..*" Image : contient
+Patient "1" -- "0..*" ResultatExercice : a
+Orthophoniste "1" -- "0..*" Exercice : a
 
 @enduml
