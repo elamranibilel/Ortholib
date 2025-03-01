@@ -1,158 +1,248 @@
-@startuml Class
+@startuml Ortholib_Class
 
-abstract class Utilisateur {
-    - nom : String
-    - prenom : String
-    - email : String
-    - motDePasse : String
-    - telephone : String
-    - dateNaissance : Date
-    - genre : String
-    - ville : String
-    - statutCompte : String
-    - dateInscription : Date
-    
+abstract class User {
+    - id : int
+    - email : string
+    - roles : array
+    - password : string
+    - nom : string
+    - prenom : string
+    - telephone : string
+    - createdAt : DateTimeImmutable
+    - genre : string
+    - ville : string
 
-    + getNom() : String
-    + setNom(nom : String)
-    + getPrenom() : String
-    + setPrenom(prenom : String)
-    + getEmail() : String
-    + setEmail(email : String)
-    + getMotDePasse() : String
-    + setMotDePasse(motDePasse : String)
-    + getTelephone() : String
-    + setTelephone(telephone : String)
-    + getDateNaissance() : Date
-    + setDateNaissance(dateNaissance : Date)
-    + getGenre() : String
-    + setGenre(genre : String)
-    + getVille() : String
-    + setVille(ville : String)
-    + getStatutCompte() : String
-    + setStatutCompte(statutCompte : String)
-    + getDateInscription() : Date
-    + setDateInscription(dateInscription : Date)
+    + getId() : int
+    + getEmail() : string
+    + setEmail(email: string) : self
+    + getUserIdentifier() : string
+    + getRoles() : array
+    + setRoles(roles: array) : self
+    + getPassword() : string
+    + setPassword(password: string) : self
+    + eraseCredentials() : void
+    + getNom() : string
+    + setNom(nom: string) : self
+    + getPrenom() : string
+    + setPrenom(prenom: string) : self
+    + getTelephone() : string
+    + setTelephone(telephone: string) : self
+    + getCreatedAt() : DateTimeImmutable
+    + setCreatedAt(createdAt: DateTimeImmutable) : self
+    + getGenre() : string
+    + setGenre(genre: string) : self
+    + getVille() : string
+    + setVille(ville: string) : self
+    + __toString() : string
+}
+
+class Administrateur {
+    + getRoles() : Array
 }
 
 class Orthophoniste {
-    - nombreHeuresTravail : int
-    - listePatients : Patient
+    - nombreHeureTravail : int
+    - patients : Collection<Patient>
+    - cabinet : Collection<Cabinet>
+    - imagesOrthophoniste : Collection<Image>
+    - specialisation : String
+    - seances : Collection<Seances>
+    - exercices : Collection<Exercice>
 
-    + getNombreHeuresTravail() : int
-    + setNombreHeuresTravail(nombreHeures : int)
-    + getListePatients() : Patient
-    + setListePatients(listePatients : Patient)
+    + getNombreHeureTravail() : int
+    + setNombreHeureTravail(nombreHeureTravail : int)
+    + getRoles() : Array
+    + getPatients() : Collection<Patient>
+    + addPatient(patient : Patient)
+    + removePatient(patient : Patient)
+    + getCabinet() : Collection<Cabinet>
+    + setCabinet(cabinet : Collection<Cabinet>)
+    + getImagesOrthophoniste() : Collection<Image>
+    + addImageOrthophoniste(imagesOrthophoniste : Image)
+    + removeImageOrthophoniste(imagesOrthophoniste : Image)
+    + getSpecialisation() : String
+    + setSpecialisation(specialisation : String)
+    + getSeances() : Collection<Seances>
+    + addSeance(seances : Seances)
+    + removeSeance(seances : Seances)
+    + getExercices() : Collection<Exercice>
+    + addExercice(exercices : Exercice)
+    + removeExercice(exercices : Exercice)
 }
 
 class Patient {
     - niveauLangue : String
     - difficulteTest : String
-    - difficultesRencontrees : String
     - niveauApprentissage : String
-    - maladie : String
-    - preferencePresence : Boolean
-    - preferenceCommunication : String
-    - codeVerification : String
-    - orthophonistesAssocies : Orthophoniste
+    - deficient : String
+    - difficulteRencontrees : Array
+    - choixOrtho : Collection<Orthophoniste>
+    - imagesPatient : Collection<Image>
+    - seances : Collection<Seances>
+    - exercices : Collection<Exercice>
+    - resultatExercices : Collection<ResultatExercice>
 
     + getNiveauLangue() : String
     + setNiveauLangue(niveauLangue : String)
     + getDifficulteTest() : String
     + setDifficulteTest(difficulteTest : String)
-    + getDifficultesRencontrees() : String
-    + setDifficultesRencontrees(difficultesRencontrees : String)
     + getNiveauApprentissage() : String
     + setNiveauApprentissage(niveauApprentissage : String)
-    + getMaladie() : String
-    + setMaladie(maladie : String)
-    + getDifficultes() : String
-    + setDifficultes(difficultes : String)
-    + getPreferencePresence() : Boolean
-    + setPreferencePresence(preferencePresence : Boolean)
-    + getPreferenceCommunication() : String
-    + setPreferenceCommunication(preferenceCommunication : String)
-    + getCodeVerification() : String
-    + setCodeVerification(codeVerification : String)
-    + getOrthophonistesAssocies() : Orthophoniste
-    + setOrthophonistesAssocies(orthophonistesAssocies : Orthophoniste)
+    + getDeficient() : String
+    + setDeficient(deficient : String)
+    + getRoles() : Array
+    + getDifficultesRencontrees() : Array
+    + setDifficultesRencontrees(difficultesRencontrees : Array)
+    + getChoixOrtho() : Collection<Orthophoniste>
+    + setChoixOrtho(choixOrtho : Collection<Orthophoniste>)
+    + getImagesPatient() : Collection<Image>
+    + addImagesPatient(imagesPatient : Image)
+    + removeImagesPatient(imagesPatient : Image)
+    + getSeances() : Collection<Seances>
+    + addSeance(seances : Seances)
+    + removeSeance(seances : Seances)
+    + getExercices() : Collection<Exercice>
+    + addExercice(exercices : Exercice)
+    + removeExercice(exercices : Exercice)
+    + getResultatExercices() : Collection<ResultatExercice>
+    + addResultatExercice(resultatExercices : ResultatExercice)
+    + removeResultatExercice(resultatExercices : ResultatExercice)
 }
 
-class Administrateur {
+class Cabinet {
+    - id : int
     - nom : String
-    - prenom : String
-    - email : String
-    - motDePasse : String
-    - statutCompte : String
+    - adresse : String
+    - telephone : String
+    - orthophonistes : Collection<Orthophoniste>
+    - imagesCabinet : Collection<Image>
 
+    + getId() : int
     + getNom() : String
     + setNom(nom : String)
-    + getPrenom() : String
-    + setPrenom(prenom : String)
-    + getEmail() : String
-    + setEmail(email : String)
-    + getMotDePasse() : String
-    + setMotDePasse(motDePasse : String)
-    + getStatutCompte() : String
-    + setStatutCompte(statutCompte : String)
+    + getAdresse() : String
+    + setAdresse(adresse : String)
+    + getTelephone() : String
+    + setTelephone(telephone : String)
+    + getOrthophonistes() : Collection<Orthophoniste>
+    + addOrthophoniste(orthophonistes : Orthophoniste)
+    + removeOrthophoniste(orthophonistes : Orthophoniste)
+    + getImagesCabinet() : Collection<Image>
+    + addImagesCabinet(imagesCabinet : Image)
+    + removeImagesCabinet(imagesCabinet : Image)
 }
 
-class Compte {
-    - photo : String
-    - informationPersonnel : Utilisateur
-    - historiqueExercices : ExercicePersonnalise
-    - historiqueJeux : Jeu
-    + getPhoto() : String
-    + setPhoto(photo : String)
-    + getInformationPersonnel() : Utilisateur
-    + setInformationPersonnel(informationPersonnel : Utilisateur)
-    + getHistoriqueExercices() : ExercicePersonnalise
-    + setHistoriqueExercices(historiqueExercices : ExercicePersonnalise)
-    + getHistoriqueJeux() : Jeu
-    + setHistoriqueJeux(historiqueJeux : Jeu)
-}
-
-class Jeu {
+class Exercice {
     - id : int
     - type : String
-    - description : String
-    - participants : Patient
+    - chronometre : Patient
+    - patient : Collection<Patient>
+    - orthophoniste : Collection<Orthophoniste>
+    - signification : Collection<Signification>
+    - resultatExercices : Collection<ResultatExercice>
+
     + getId() : int
-    + setId(id : int)
     + getType() : String
     + setType(type : String)
-    + getDescription() : String
-    + setDescription(description : String)
-    + getParticipants() : Patient
-    + setParticipants(participants : Patient)
+    + getChronometre() : int
+    + setChronometre(chronometre : int)
+    + getPatient() : Collection<Patient>
+    + setPatient(patient : Collection<Patient>)
+    + getOrthophoniste() : Collection<Orthophoniste>
+    + setOrthophoniste(orthophoniste : Collection<Orthophoniste>)
+    + getSignification() : Collection<Signification>
+    + addSignification(signification : Signification)
+    + removeSignification(signification : Signification)
+    + getResultatExercices() : Collection<ResultatExercice>
+    + addResultatExercice(resultatExercices : ResultatExercice)
+    + removeResultatExercice(resultatExercices : ResultatExercice)
 }
 
-class ExercicePersonnalise {
+class Image {
     - id : int
-    - contenu : String
-    - patientAssocie : Patient
-    - orthophonisteAssocie : Orthophoniste
+    - name : String
+    - cabinet : Collection<Cabinet>
+    - orthophoniste : Collection<Orthophoniste>
+    - patient : Collection<Patient>
+
     + getId() : int
-    + setId(id : int)
-    + getContenu() : String
-    + setContenu(contenu : String)
-    + getPatientAssocie() : Patient
-    + setPatientAssocie(patientAssocie : Patient)
-    + getOrthophonisteAssocie() : Orthophoniste
-    + setOrthophonisteAssocie(orthophonisteAssocie : Orthophoniste)
+    + getName() : String
+    + setName(name : String)
+    + getCabinet() : Collection<Cabinet>
+    + setCabinet(cabinet : Collection<Cabinet>)
+    + getOrthophoniste() : Collection<Orthophoniste>
+    + setOrthophoniste(orthophoniste : Collection<Orthophoniste>)
+    + getPatient() : Collection<Patient>
+    + setPatient(patient : Collection<Patient>)
 }
 
+class ResultatExercice {
+    - id : int
+    - exercice : Collection<Exercice>
+    - patient : Collection<Patient>
+    - score : int
+    - date : DateTimeInterface
+
+    + getId() : int
+    + getExercice() : Collection<Exercice>
+    + setExercice(exercice : Collection<Exercice>)
+    + getPatient() : Collection<Patient>
+    + setPatient(patient : Collection<Patient>)
+    + getScore() : int
+    + setScore(score : int)
+    + getDate() : DateTimeInterface
+    + setDate(date : DateTimeInterface)
+}
+
+class Seances {
+    - id : int
+    - orthophoniste : Orthophoniste
+    - patient : Patient
+    - dateHeureDebut : DateTimeInterface
+    - dateHeureFin : DateTimeInterface
+    - mode : string
+    - duree : string
+    - exercices : string
+
+    + getId() : int
+    + getOrthophoniste() : Orthophoniste
+    + setOrthophoniste(orthophoniste: Orthophoniste) : self
+    + getPatient() : Patient
+    + setPatient(patient: Patient) : self
+    + getDateHeureDebut() : DateTimeInterface
+    + setDateHeureDebut(dateHeureDebut: DateTimeInterface) : self
+    + getDateHeureFin() : DateTimeInterface
+    + setDateHeureFin(dateHeureFin: DateTimeInterface) : self
+    + getMode() : string
+    + setMode(mode: string) : self
+    + getDuree() : int
+    + setDuree(duree: int) : self
+    + calculerTotalHeures(seances: array) : int
+    + verifierLimiteHeures(seances: array) : bool
+    + getExercices() : string
+    + setExercices(exercices: string) : self
+}
+
+class Orthophoniste
+class Patient
+
+Seances --> Orthophoniste : appartient à
+Seances --> Patient : appartient à
 
 
 Utilisateur <|-- Orthophoniste
 Utilisateur <|-- Patient
-Orthophoniste <|-- Administrateur 
-Patient <|-- Administrateur 
-Orthophoniste "1" -- "0..*" Patient : associe
+Utilisateur <|-- Administrateur
+Utilisateur <|-- Secretaire
+
+Cabinet "1" -- "0..*" Orthophoniste : emploie
+Cabinet "1" -- "0..1" Secretaire : a
+
+Orthophoniste "1" -- "0..*" Patient : suit
 Patient "0..*" -- "0..*" Jeu : participe
-Patient "1" -- "0..*" ExercicePersonnalise : a
+Patient "1" -- "0..*" ExercicePersonnalise : suit
 Compte "1" -- "0..*" ExercicePersonnalise : contient
 Compte "1" -- "0..*" Jeu : contient
-Compte "1" -- "1" Utilisateur : contient
+Compte "1" -- "1" Utilisateur : appartient à
 
 @enduml
