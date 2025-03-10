@@ -44,6 +44,7 @@ Connexion <.. RefuserTest : include
 Connexion <.. ConfirmerDifficultesSansTest : include
 PasserTest <.. ValidationResultat : include
 ValidationResultat <.. OrientationNiveauApprentissage : include
+ConfirmerDifficultesSansTest <.. OrientationNiveauApprentissage : include
 OrientationNiveauApprentissage <.. ChoixOrthophoniste : include
 ChoixOrthophoniste <.. EspacePatient : include
 EspacePatient <.. ConsulterResultatsProgres : include
