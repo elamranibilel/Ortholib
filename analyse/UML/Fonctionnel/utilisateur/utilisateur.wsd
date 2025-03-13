@@ -3,7 +3,7 @@
 left to right direction
 
 actor Administrateur as Admin 
-actor Utilisateur 
+actor Patient as Utilisateur 
 
 rectangle Application_Ortholib {
     usecase "Se connecter" as Connexion
@@ -15,20 +15,16 @@ rectangle Application_Ortholib {
     usecase "Orientation vers un niveau d’apprentissage" as OrientationNiveauApprentissage
     usecase "Choix d’un orthophoniste pour consultation" as ChoixOrthophonisteConsultation
     usecase "Accès à l’espace personnel" as EspacePersonnel
-    usecase "Consulter les résultats et progrès des séances orthophoniques" as ConsulterResultatProgresSeances
-    usecase "Consulter les exercices donnés par l’orthophoniste" as ConsulterExercicesDonnes
-    usecase "Terminer les exercices" as TerminerExercices
-    usecase "Accéder aux jeux proposés par l’application Ortholib" as AccederJeuxProposes
+    usecase "Consulter des progrès et des séances orthophoniques passées" as ConsulterResultatProgresSeances
     usecase "Choix de changer d’orthophoniste" as ChoixOrthophoniste
     usecase "Consulter les informations personnelles dans la page de compte" as ConsulterInfosPersonnelle
     usecase "Modifier les informations personnelles dans la page de compte" as ModifierInfosPersonnelle
-    usecase "Consulter des jeux dans la liste" as ConsulterJeuListe
-    usecase "Sélectionner un jeu dans la liste" as SelectionnerJeuListe
-    usecase "Jouer à un jeu" as JouerJeu
-    usecase "Sauvegarder les résultats" as SauvegardeResultat
-    usecase "Consulter la liste des exercices personnalisés" as ConsulterListeExercices
+    usecase "Consulter la liste des exercices donnés par l’orthophoniste" as ConsulterListeExercices
     usecase "Selectionner un exercice" as SelectionnerExercice
     usecase "Completer un exercice" as CompleterExercice
+    usecase "Consulter les Résultats des exercices" as ConsulterResultatExercices
+    usecase "Télécharger des documents envoyés par l’orthophoniste" as TelechargerDocuments
+    usecase "Envoyer un message ou un document à l’orthophoniste" as EnvoyerMessage
 }
 
 /' ACTORS -- ACTORS '/
@@ -45,19 +41,15 @@ Utilisateur -- ConfirmerDifficultesSansTest
 Utilisateur -- ChoixOrthophonisteConsultation
 Utilisateur -- EspacePersonnel
 Utilisateur -- ConsulterResultatProgresSeances
-Utilisateur -- ConsulterExercicesDonnes
-Utilisateur -- TerminerExercices
-Utilisateur -- AccederJeuxProposes
 Utilisateur -- ChoixOrthophoniste
 Utilisateur -- ConsulterInfosPersonnelle
 Utilisateur -- ModifierInfosPersonnelle
-Utilisateur -- ConsulterJeuListe
-Utilisateur -- SelectionnerJeuListe
-Utilisateur -- JouerJeu
-Utilisateur -- SauvegardeResultat
 Utilisateur -- ConsulterListeExercices
 Utilisateur -- SelectionnerExercice
 Utilisateur -- CompleterExercice
+Utilisateur -- ConsulterResultatExercices
+Utilisateur -- TelechargerDocuments
+Utilisateur -- EnvoyerMessage
 
 /' USECASES -- USECASES '/
 
@@ -70,18 +62,15 @@ ValidationResultat <.. OrientationNiveauApprentissage : include
 OrientationNiveauApprentissage <.. ChoixOrthophonisteConsultation : include
 ChoixOrthophonisteConsultation <.. EspacePersonnel : include
 EspacePersonnel <.. ConsulterResultatProgresSeances : include
-EspacePersonnel <.. ConsulterExercicesDonnes : include
-ConsulterExercicesDonnes <.. TerminerExercices : include
-EspacePersonnel <.. AccederJeuxProposes : extend
-EspacePersonnel <.. ChoixOrthophoniste : extend
+ModifierInfosPersonnelle <|-- ChoixOrthophoniste
 EspacePersonnel <.. ConsulterInfosPersonnelle : include
 ConsulterInfosPersonnelle <.. ModifierInfosPersonnelle : extend
-AccederJeuxProposes <.. ConsulterJeuListe : include
-ConsulterJeuListe <.. SelectionnerJeuListe : include
-SelectionnerJeuListe <.. JouerJeu : include
-JouerJeu <.. SauvegardeResultat : include
 EspacePersonnel <.. ConsulterListeExercices : include
 ConsulterListeExercices <.. SelectionnerExercice : include
 SelectionnerExercice <.. CompleterExercice : include
+CompleterExercice <.. ConsulterResultatExercices : include
+ConsulterListeExercices <.. ConsulterResultatExercices : extend
+EspacePersonnel <.. TelechargerDocuments : include
+EspacePersonnel <.. EnvoyerMessage : extend
 
 @enduml
