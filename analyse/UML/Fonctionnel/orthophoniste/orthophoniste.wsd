@@ -16,18 +16,15 @@ rectangle Application_Ortholib {
     usecase "Consulter les informations personnelles" as ConsulterInfos
     usecase "Mettre à jour les informations personnelles" as ModifierInfos
     usecase "Suivre le compteur des heures de séance" as SuivreCompteurHeuresSeance
-    usecase "Consulter le nombre d'exercices personnalisés créés" as ConsulterNombreExercicesPersonnalises
-    usecase "Visualiser la liste des exercices personnalisés" as VisualiserListeExercicesPersonnalises
-    usecase "Assigner un exercice personnalisé à un patient" as AssignerExercicePersonnalisePatient
+    usecase "Consulter le nombre d'exercices créés" as ConsulterNombreExercicesPersonnalises
     usecase "Consulter la liste des exercices" as ConsulterListeExercices
     usecase "Afficher les détails d’un exercice" as AfficherDetailsExercice
     usecase "Consulter les patients ayant participé à un exercice" as ConsulterPatientsExercice
     usecase "Consulter les scores des patients sur un exercice spécifique" as ConsulterScoresExercice  
-    usecase "Accéder à la liste des exercices personnalisables" as ListeExercicesPersonnalisables
     usecase "Personnaliser un exercice de vocabulaire" as PersonnaliserVocabulaire
     usecase "Personnaliser un exercice de mémoire" as PersonnaliserMemoire
     usecase "Personnaliser un exercice de dictée avec des mots et des fichiers audio" as PersonnaliserDicteeMotsAudio
-    usecase "Sélectionner des patients pour un exercice personnalisé" as SelectionnerPatientsExercice
+    usecase "Sélectionner des patients pour un exercice" as SelectionnerPatientsExercice
 }
 
 /' ACTORS -- ACTORS '/
@@ -47,13 +44,10 @@ Orthophoniste -- ConsulterInfos
 Orthophoniste -- ModifierInfos
 Orthophoniste -- SuivreCompteurHeuresSeance
 Orthophoniste -- ConsulterNombreExercicesPersonnalises
-Orthophoniste -- VisualiserListeExercicesPersonnalises
-Orthophoniste -- AssignerExercicePersonnalisePatient
 Orthophoniste -- ConsulterListeExercices
 Orthophoniste -- AfficherDetailsExercice
 Orthophoniste -- ConsulterPatientsExercice
 Orthophoniste -- ConsulterScoresExercice
-Orthophoniste -- ListeExercicesPersonnalisables
 Orthophoniste -- PersonnaliserVocabulaire
 Orthophoniste -- PersonnaliserMemoire
 Orthophoniste -- PersonnaliserDicteeMotsAudio
@@ -62,8 +56,8 @@ Orthophoniste -- SelectionnerPatientsExercice
 /' USECASES -- USECASES '/
 
 EspaceOrthophonie <.. AccederListePatients : include
-AccederListePatients <.. PlanifierSeancePatient : include
-PlanifierSeancePatient <.. ConsulterProfilPatient : include
+EspaceOrthophonie <.. PlanifierSeancePatient : include
+AccederListePatients <.. ConsulterProfilPatient : include
 ConsulterProfilPatient <.. ModifierProfilPatient : extend
 EspaceOrthophonie <.. EnvoyerMessageFichier : extend
 EspaceOrthophonie <.. SuivreProgresNoterPatient : include
@@ -71,17 +65,13 @@ EspaceOrthophonie <.. ConsulterInfos : include
 ConsulterInfos <.. ModifierInfos : extend
 ConsulterInfos <.. SuivreCompteurHeuresSeance : include
 ConsulterInfos <.. ConsulterNombreExercicesPersonnalises : extend
-ConsulterNombreExercicesPersonnalises <.. VisualiserListeExercicesPersonnalises : include
-EspaceOrthophonie <.. VisualiserListeExercicesPersonnalises : include
-VisualiserListeExercicesPersonnalises <.. AssignerExercicePersonnalisePatient : extend
 EspaceOrthophonie <.. ConsulterListeExercices : extend
 ConsulterListeExercices <.. AfficherDetailsExercice : include
 AfficherDetailsExercice <.. ConsulterPatientsExercice : extend
 ConsulterPatientsExercice <.. ConsulterScoresExercice : extend
-EspaceOrthophonie <.. ListeExercicesPersonnalisables : include
-ListeExercicesPersonnalisables <|-- PersonnaliserVocabulaire 
-ListeExercicesPersonnalisables <|-- PersonnaliserMemoire 
-ListeExercicesPersonnalisables <|-- PersonnaliserDicteeMotsAudio
-ListeExercicesPersonnalisables <.. SelectionnerPatientsExercice : include
+ConsulterListeExercices <|-- PersonnaliserVocabulaire 
+ConsulterListeExercices <|-- PersonnaliserMemoire 
+ConsulterListeExercices <|-- PersonnaliserDicteeMotsAudio
+ConsulterListeExercices <.. SelectionnerPatientsExercice : include
 
 @enduml
