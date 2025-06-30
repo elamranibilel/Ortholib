@@ -239,6 +239,46 @@ class Signification {
     + removeExercice(exercices : Exercice)
 }
 
+class Specialisation {
+    - id : int
+    - label : string
+    - orthophoniste : Collection<Orthophoniste>
+    - patient : Collection<Patient>
+
+    + getId() : int
+    + getLabel() : string
+    + setLabel(label: string) : Specialisation
+    + getOrthophoniste() : Collection<Orthophoniste>
+    + addOrthophoniste(orthophoniste: Orthophoniste) : Specialisation
+    + removeOrthophoniste(orthophoniste: Orthophoniste) : Specialisation
+    + getPatient() : Collection<Patient>
+    + addPatient(patient: Patient) : Specialisation
+    + removePatient(patient: Patient) : Specialisation
+}
+
+
+class Commentaire {
+    - id : int
+    - texte : string
+    - createdAt : DateTimeImmutable
+    - roleAuteur : string
+    - roleDestinataire : string
+
+    + getId() : int
+    + getTexte() : string
+    + setTexte(texte: string) : Commentaire
+    + getCreatedAt() : DateTimeImmutable
+    + setCreatedAt(createdAt: DateTimeImmutable) : Commentaire
+    + getAuteur() : User
+    + setAuteur(auteur: User) : Commentaire
+    + getDestinataire() : User
+    + setDestinataire(destinataire: User) : Commentaire
+    + getRoleAuteur() : string
+    + setRoleAuteur(roleAuteur: string) : Commentaire
+    + getRoleDestinataire() : string
+    + setRoleDestinataire(roleDestinataire: string) : Commentaire
+}
+
 User <|-- Orthophoniste
 User <|-- Patient
 User <|-- Administrateur
@@ -256,5 +296,8 @@ Orthophoniste "1" -- "0..*" Image : contient
 Patient "1" -- "0..*" Image : contient
 Patient "1" -- "0..*" ResultatExercice : a
 Orthophoniste "1" -- "0..*" Exercice : a
+Specialisation "1" -- "0..*" Orthophoniste : contient
+Specialisation "1" -- "0..*" Patient : concerne
+User "1" -- "0..*" Commentaire : ecrit
 
 @enduml
