@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    Ajouter un administrateur
+{% endblock %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{% block body %}
+    <h1>
+        Ajouter un administrateur
+    </h1>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button type="submit">
+        Valider
+    </button>
+    {{ form_end(form) }}
+{% endblock %}

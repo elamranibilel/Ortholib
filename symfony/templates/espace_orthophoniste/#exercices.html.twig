@@ -1,0 +1,98 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+Liste des Exercices
+{% endblock %}
+{% block body %}
+<div class="container mt-4">
+    <h1 class="text-center">
+        Liste des Exercices
+    </h1>
+    <a href="{{ path('app_exercice_new') }}" class="btn btn-success">
+        Ajouter un exercice
+    </a>
+    <hr>
+    <a href="{{ path('app_exercice_type_vocabulaire') }}" class="btn btn-primary">
+        Vocabulaire
+    </a>
+    <a href="{{ path('app_exercice_type_orthographe') }}" class="btn btn-primary">
+        Orthographe
+    </a>
+    <a href="{{ path('app_exercice_type_memoire') }}" class="btn btn-primary">
+        Memoire
+    </a>
+    <br>
+    <br>
+    <table class="table table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>
+                    ID
+                </th>
+                <th>
+                    Type
+                </th>
+                <th>
+                    Chronomètre
+                </th>
+                <th>
+                    Score
+                </th>
+                <th>
+                    Patient
+                </th>
+                <th>
+                    Orthophoniste
+                </th>
+                <th>
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for exercice in exercices %}
+            <tr>
+                <td>
+                    {{ exercice.id }}
+                </td>
+                <td>
+                    {{ exercice.type }}
+                </td>
+                <td>
+                    {{ exercice.chronometre is not null ? exercice.chronometre ~ ' sec' : 'N/A' }}
+                </td>
+                <td>
+                    {% if exercice.resultatExercices is not empty %}
+                    {% for resultatExercices in exercice.resultatExercices %}
+                    {{ resultatExercices.score }}
+                    {% endfor %}
+                    {% else %}
+                    Non défini
+                    {% endif %}
+                </td>
+                <td>
+                    {{ exercice.patient.nom ~ ' ' ~ exercice.patient.prenom }}
+                </td>
+                <td>
+                    {{ exercice.orthophoniste.nom ~ ' ' ~ exercice.orthophoniste.prenom }}
+                </td>
+                <td>
+                    <a href="{{ path('app_exercice_show', { id: exercice.id }) }}" class="btn btn-primary btn-sm">
+                        Voir
+                    </a>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="7" class="text-center">
+                    Aucun exercice trouvé.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <a href="{{ path('app_espace_orthophoniste') }}" class="btn btn-danger">
+        Retour
+    </a>
+</div>
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Espace Patient - Exercices
+{% endblock %}
+
+{% block body %}
+	<div class="container mt-4">
+		<h1 class="text-center mb-4">Espace Patient - Exercices</h1>
+
+		{% set types = ['Vocabulaire', 'Orthographe', 'Mémoire'] %}
+
+		<h2 class="text-danger">Exercices à faire</h2>
+		{% for type in types %}
+			{% set exerciceFaire = exercices | filter(exercice => exercice.type == type and historique[exercice.id] is empty)
+    %}
+			{% if exerciceFaire is not empty %}
+				<h3 class="text-primary mt-3">{{ type | capitalize }}</h3>
+				<div class="row">
+					{% for exercice in exerciceFaire %}
+						<div class="col-md-6 col-lg-4">
+							<div class="card mb-4 shadow-sm border-danger">
+								<div class="card-body">
+									<h5 class="card-title">Exercice n°{{ exercice.id }}</h5>
+									<p class="card-text">
+										<strong>Type :</strong>
+										{{ exercice.type }}</p>
+									<p class="card-text">
+										<strong>Chronomètre :</strong>
+										{{ exercice.chronometre ? exercice.chronometre ~ ' sec' : 'Non défini' }}
+									</p>
+									<p class="text-muted">Pas encore fait</p>
+								</div>
+								<div class="card-footer">
+									<a href="{{ path('app_espace_patient_show_exercice', { id: exercice.id }) }}" class="btn btn-outline-danger">Faire l'exercice</a>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			{% endif %}
+		{% endfor %}
+
+		<hr class="my-5">
+
+		<h2 class="text-success">Exercices faits</h2>
+		{% for type in types %}
+			{% set exercicesFaits = exercices | filter(exercice => exercice.type == type and historique[exercice.id] is not empty) %}
+			{% if exercicesFaits is not empty %}
+				<h3 class="text-primary mt-3">{{ type | capitalize }}</h3>
+				<div class="row">
+					{% for exercice in exercicesFaits %}
+						<div class="col-md-6 col-lg-4">
+							<div class="card mb-4 shadow-sm border-success">
+								<div class="card-body">
+									<h5 class="card-title">Exercice n°{{ exercice.id }}</h5>
+									<p class="card-text">
+										<strong>Type :</strong>
+										{{ exercice.type }}</p>
+									<p class="card-text">
+										<strong>Chronomètre :</strong>
+										{{ exercice.chronometre ? exercice.chronometre ~ ' sec' : 'Non défini' }}
+									</p>
+
+									<p class="card-text">
+										<strong>Derniers résultats :</strong>
+									</p>
+									<ul class="list-group">
+										{% for resultat in historique[exercice.id] %}
+											<li class="list-group-item d-flex justify-content-between">
+												<span>{{ resultat.date|date("d/m/Y H:i") }}</span>
+												<span class="badge {% if resultat.score < 50 %} bg-danger {% elseif resultat.score < 80 %} bg-warning text-dark {% else %} bg-success {% endif %} fs-6">
+													{{ resultat.score }}
+													pts
+												</span>
+											</li>
+										{% endfor %}
+									</ul>
+								</div>
+								<div class="card-footer">
+									<a href="{{ path('app_espace_patient_show_exercice', { id: exercice.id }) }}" class="btn btn-outline-success">Voir les détails</a>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			{% endif %}
+		{% endfor %}
+	</div>
+{% endblock %}

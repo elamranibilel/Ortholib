@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %} {% block title %}Liste des Commentaires{%
+endblock %} {% block body %}
+<div class="container mt-4">
+  <h1 class="text-center mb-4">Liste des Commentaires</h1>
+
+  <div class="d-flex justify-content-end mb-3">
+    <a href="{{ path('app_commentaire_new') }}" class="btn btn-success">
+      + Ajouter un Commentaire
+    </a>
+  </div>
+  {% for message in app.flashes('success') %}
+  <div
+    class="alert alert-success alert-dismissible fade show mt-2"
+    role="alert"
+  >
+    {{ message }}
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="alert"
+      aria-label="Fermer"
+    ></button>
+  </div>
+  {% endfor %} {% if commentaires is empty %}
+  <div class="alert alert-warning text-center">Aucun commentaire trouvé.</div>
+  {% else %}
+  <div class="table-responsive">
+    <table class="table table-hover table-bordered text-center">
+      <thead class="table-dark">
+        <tr>
+          <th>ID</th>
+          <th>Texte</th>
+          <th>Auteur</th>
+          <th>Rôle</th>
+          <th>Destinataire</th>
+          <th>Rôle</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for c in commentaires %}
+        <tr>
+          <td>{{ c.id }}</td>
+          <td>{{ c.texte }}</td>
+          <td>{{ c.auteur.nom }}</td>
+          <td>
+            <span
+              class="badge {% if c.roleAuteur == 'Orthophoniste' %} bg-primary {% elseif c.roleAuteur == 'Patient' %} bg-success {% else %} bg-secondary {% endif %}"
+            >
+              {{ c.roleAuteur }}
+            </span>
+          </td>
+          <td>{{ c.destinataire.nom }}</td>
+          <td>
+            <span
+              class="badge {% if c.roleDestinataire == 'Orthophoniste' %} bg-primary {% elseif c.roleDestinataire == 'Patient' %} bg-success {% else %} bg-secondary {% endif %}"
+            >
+              {{ c.roleDestinataire }}
+            </span>
+          </td>
+          <td>
+            <a
+              href="{{ path('app_commentaire_show', { id: c.id }) }}"
+              class="btn btn-info btn-sm"
+            >
+              Voir
+            </a>
+            <a
+              href="{{ path('app_commentaire_edit', { id: c.id }) }}"
+              class="btn btn-warning btn-sm"
+            >
+              Modifier
+            </a>
+            <form
+              action="{{ path('app_commentaire_delete', { id: c.id }) }}"
+              method="post"
+              class="d-inline"
+            >
+              <input
+                type="hidden"
+                name="_token"
+                value="{{ csrf_token('delete' ~ c.id) }}"
+              />
+              <button
+                type="submit"
+                class="btn btn-danger btn-sm"
+                onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire ?');"
+              >
+                Supprimer
+              </button>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html.twig" %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{% block body %}
+    <div class="container">
+        <hr>
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <br>
+                <button type="submit" class="btn btn-success">
+                    enregistrer !
+                </button>
+                <a href="{{ path('app_cabinet') }}" class="btn btn-danger">
+                    Retour
+                </a>
+                <br>
+                    <br>
+                        {{ form_end(form) }}
+                    </div>
+                {% endblock %}
+                

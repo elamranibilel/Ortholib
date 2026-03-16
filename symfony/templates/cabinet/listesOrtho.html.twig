@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+{% block title %}Liste des orthophonistes{% endblock %}
+{% block body %}
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="text-primary fw-bold">
+            Gestion des orthophonistes chez {{ cabinet.nom }}
+        </h1>
+    </div>
+
+    <!-- Grille des orthophonistes -->
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for orthophoniste in orthophonistes %}
+        <div class="col">
+            <div class="card h-100 shadow-sm border-0 rounded-4 overflow-hidden">
+                <div class="position-relative" style="height: 220px;">
+                    {% if orthophoniste.imagesOrthophoniste is not empty %}
+                    <img src="{{ asset('uploads/images/' ~ orthophoniste.imagesOrthophoniste.0.name) }}"
+                        alt="Photo de {{ orthophoniste.nom }}" class="w-100 h-100 object-fit-cover">
+                    {% else %}
+                    <div class="d-flex align-items-center justify-content-center bg-light h-100 text-muted">
+                        Aucune image disponible
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="card-body text-center">
+                    <h5 class="fw-bold">{{ orthophoniste.nom }}</h5>
+                    <p class="text-muted mb-1"><i class="bi bi-geo-alt-fill"></i> {{ orthophoniste.ville }}</p>
+                    <p class="text-success fw-bold"><i class="bi bi-envelope-fill"></i> {{ orthophoniste.email }}</p>
+                </div>
+                <div class="card-footer bg-white text-center border-0 pb-4">
+                    <a class="btn btn-dark rounded-pill px-4 py-2 shadow-sm"
+                        href="{{ path('app_orthophoniste_show', { id: orthophoniste.id }) }}">
+                        Voir le profil
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-12 text-center text-muted py-5">
+            <em>Aucun orthophoniste trouvé.</em>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    <div class="d-flex justify-content-center mt-4">
+        {{ knp_pagination_render(orthophonistes) }}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails du Commentaire{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1 class="mb-4">Détails du Commentaire</h1>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Commentaire #{{ commentaire.id }}</h5>
+            <p class="card-text"><strong>Texte :</strong> {{ commentaire.texte }}</p>
+            <p class="card-text"><strong>Auteur :</strong> {{ commentaire.auteur.nom }}</p>
+            <p class="card-text"><strong>Rôle :</strong>
+                <span
+                    class="badge {% if commentaire.roleAuteur == 'Orthophoniste' %} bg-primary {% elseif commentaire.roleAuteur == 'Patient' %} bg-success {% else %} bg-secondary {% endif %}">
+                    {{ commentaire.roleAuteur }}
+                </span>
+            </p>
+            <p class="card-text"><strong>Destinataire :</strong> {{ commentaire.destinataire.nom }}</p>
+            <p class="card-text"><strong>Rôle :</strong>
+                <span
+                    class="badge {% if commentaire.roleDestinataire == 'Orthophoniste' %} bg-primary {% elseif commentaire.roleDestinataire == 'Patient' %} bg-success {% else %} bg-secondary {% endif %}">
+                    {{ commentaire.roleDestinataire }}
+                </span>
+            </p>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a href="{{ path('app_commentaire') }}" class="btn btn-secondary">Retour à la liste</a>
+        <a href="{{ path('app_commentaire_edit', { id: commentaire.id }) }}" class="btn btn-warning">Modifier</a>
+
+        <form action="{{ path('app_commentaire_delete', { id: commentaire.id }) }}" method="post"
+            style="display:inline;">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ commentaire.id) }}">
+            <button type="submit" class="btn btn-danger"
+                onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce commentaire ?');">Supprimer</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

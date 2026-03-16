@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	Liste des administrateurs
+{% endblock %}
+
+{% block body %}
+	<div class="container mt-5">
+		<div class="d-flex justify-content-between align-items-center mb-4">
+			<h1 class="text-primary">
+				Gestion des administrateurs
+			</h1>
+			<a href="{{ path('app_administrateur_new') }}" class="btn btn-success">
+				<i class="bi bi-plus-circle"></i>
+				Ajouter un administrateur
+			</a>
+		</div>
+		<!-- Table des administrateurs -->
+		<div class="table-responsive">
+			<table class="table table-striped table-hover align-middle">
+				<thead class="table-dark">
+					<tr>
+						<th>
+							{# <a href="{{ path('app_administrateur_trie_id') }}" class="text-white text-decoration-none"> #}
+							ID
+							{# </a> #}
+						</th>
+						<th>
+							{# <a href="{{ path('app_administrateur_trie_nom') }}" class="text-white text-decoration-none"> #}
+							Nom
+							{# </a> #}
+						</th>
+						<th>
+							Email
+						</th>
+						<th>
+							Ville
+						</th>
+						<th>
+							Rôle
+						</th>
+						<th class="text-center">
+							Actions
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for admin in administrateurs %}
+						<tr style="cursor: pointer;" data-href="{{ path('app_administrateur_show', {'id': admin.id}) }}">
+							<td>
+								{{ admin.id }}
+							</td>
+							<td>
+								{{ admin.nom }}
+							</td>
+							<td>
+								{{ admin.email }}
+							</td>
+							<td>
+								{{ admin.ville }}
+							</td>
+							<td class="text-center">
+								<div class="btn-group">
+									<a href="{{ path('app_administrateur_show', {'id': admin.id}) }}" class="btn btn-info btn-sm me-2 rounded" onclick="event.stopPropagation();">
+										Voir
+									</a>
+									<a href="{{ path('app_administrateur_edit', {'id': admin.id}) }}" class="btn btn-warning btn-sm me-2 rounded" onclick="event.stopPropagation();">
+										Modifier
+									</a>
+									{{ include('administrateur/delete.html.twig', { administrateur: admin }) }}
+								</div>
+							</td>
+						</tr>
+					{% else %}
+						<tr>
+							<td colspan="6" class="text-center text-muted">
+								<em>
+									Aucun administrateur trouvé.
+								</em>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		<!-- Pagination -->
+		<div class="d-flex justify-content-center mt-4">
+			{{ knp_pagination_render(administrateurs) }}
+		</div>
+	</div>
+{% endblock %}

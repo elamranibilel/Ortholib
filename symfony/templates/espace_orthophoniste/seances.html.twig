@@ -1,0 +1,11 @@
+{% extends "base.html.twig" %}
+{% block title %}EspaceOrthophonisteController!{% endblock %}
+{% block body %}
+
+{% for seance in seances %}
+<li>{{seance.id}}</li>
+<li>{{seance.exercices}}</li>
+<li>{{seance.dateHeureDebut|date('d/m/Y H:i')}}</li>
+<li>{{seance.dateHeureFin|date('d/m/Y H:i')}}</li>
+{% endfor %}
+{% endblock %}

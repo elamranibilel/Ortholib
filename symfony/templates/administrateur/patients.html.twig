@@ -1,0 +1,61 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+	<div class="container mt-4">
+		<h2 class="text-center mb-4">Liste des Patients</h2>
+
+		<!-- Si un message flash est présent, l'afficher -->
+		{% for message in app.flashes('success') %}
+			<div class="alert alert-success">
+				{{ message }}
+			</div>
+		{% endfor %}
+		{% for message in app.flashes('error') %}
+			<div class="alert alert-danger">
+				{{ message }}
+			</div>
+		{% endfor %}
+
+		<table class="table table-hover table-bordered table-striped">
+			<thead class="thead-dark">
+				<tr>
+					<th scope="col">Nom</th>
+					<th scope="col">Prénom</th>
+					<th scope="col">Orthophoniste choisi</th>
+					<th scope="col">Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for patient in patients %}
+					<tr>
+						<td>{{ patient.nom }}</td>
+						<td>{{ patient.prenom }}</td>
+						<td>
+							{% if patient.choixOrtho is not null %}
+								{{ patient.choixOrtho.nom }}
+								{{ patient.choixOrtho.prenom }}
+							{% else %}
+								<span class="badge badge-secondary">Aucune orthophoniste choisie</span>
+							{% endif %}
+						</td>
+						<td>
+							<form method="post" action="{{ path('app_administrateur_remove_patient', { id: patient.id }) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir arrêter le suivi de ce patient et dissocier l\'orthophoniste ?');">
+								<input type="hidden" name="_token" value="{{ csrf_token('remove_patient' ~ patient.id) }}"/>
+								<button type="submit" class="btn btn-danger">Arrêter le suivi et retirer l'orthophoniste</button>
+							</form>
+						</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="4" class="text-center">
+							<i class="fas fa-info-circle"></i>
+							Aucun patient trouvé
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+
+{% endblock %}

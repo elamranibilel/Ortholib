@@ -1,0 +1,53 @@
+{% extends "base.html.twig" %} {% block title %}Espace {% endblock %} {% block
+body %}
+<div class="container mt-5">
+  <h1 class="mb-4">
+    Discussion avec
+    {{ patient.nom }}
+    {{ patient.prenom }}
+  </h1>
+
+  <h2>Commentaires :</h2>
+
+  {% for c in commentaires %}
+  <div class="card mb-3">
+    <div class="card-header d-flex justify-content-between">
+      <strong>{{ c.auteur.nom }} {{ c.auteur.prenom }}</strong>
+    </div>
+    <div class="card-body">
+      <p class="card-text">{{ c.texte | raw }}</p>
+    </div>
+    <div class="card-footer text-muted d-flex justify-content-between">
+      <span
+        >Destinataire:
+        {{ c.destinataire.nom }}
+        {{ c.destinataire.prenom }}</span
+      >
+    </div>
+  </div>
+  {% else %}
+  <p>Aucun commentaire pour le moment.</p>
+  {% endfor %}
+
+  <div class="card mt-4">
+    <div class="card-header">
+      <h5>Répondre :</h5>
+    </div>
+    <div class="card-body">
+      <form
+        action="{{ path('app_espace_patient_show', { id: patient.id }) }}"
+        method="POST"
+      >
+        {{ form_start(form) }}
+        <div class="mb-3">
+          {{ form_label(form.texte, "Votre réponse") }}
+          {{ form_row(form.texte, {'attr': {'class': 'form-control'}}) }}
+          <!-- Affichage du champ texte -->
+        </div>
+        <button type="submit" class="btn btn-primary">Envoyer</button>
+        {{ form_end(form) }}
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

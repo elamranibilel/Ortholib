@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails de l'Exercice {{ exercice.id }}{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="card shadow-lg p-4 rounded-4">
+        <div class="card-body">
+            <h1 class="text-center mb-4 text-primary">
+                <i class="fas fa-dumbbell"></i> Exercice #{{ exercice.id }}
+            </h1>
+
+            <div class="border-bottom pb-3 mb-3">
+                <h4 class="fw-bold text-secondary">
+                    <i class="fas fa-book"></i> Type : {{ exercice.type }}
+                </h4>
+                <p class="mt-2">
+                    <strong><i class="fas fa-stopwatch"></i> Chronomètre :</strong>
+                    <span class="badge bg-info text-dark">
+                        {{ exercice.chronometre is not null ? exercice.chronometre ~ ' sec' : 'Non défini' }}
+                    </span>
+                </p>
+                <p class="mt-2">
+                    <strong><i class="fas fa-chart-bar"></i> Score :</strong>
+                    {% if exercice.resultatExercices is not empty %}
+                    {% for score in exercice.resultatExercices %}
+                    <span class="badge bg-success">{{ score.score }}</span>
+                    {% endfor %}
+                    {% else %}
+                    <span class="text-muted">Aucun score disponible</span>
+                    {% endif %}
+                </p>
+            </div>
+
+            <div class="border-bottom pb-3 mb-3">
+                <h5 class="text-secondary"><i class="fas fa-user"></i> Patient</h5>
+                <p class="fw-semibold">{{ exercice.patient.nom ~ ' ' ~ exercice.patient.prenom }}</p>
+            </div>
+
+            <div class="border-bottom pb-3 mb-3">
+                <h5 class="text-secondary"><i class="fas fa-user-md"></i> Orthophoniste</h5>
+                <p class="fw-semibold">{{ exercice.orthophoniste.nom ~ ' ' ~ exercice.orthophoniste.prenom }}</p>
+            </div>
+
+            {% if exercice.signification is not empty %}
+            <div class="border-bottom pb-3 mb-3">
+                <h5 class="text-secondary"><i class="fas fa-book-reader"></i> Contenu associé :</h5>
+                <ul class="list-group">
+                    {% for signification in exercice.signification %}
+                    <li class="list-group-item">
+                        <strong>{{ signification.mots }}</strong> - {{ signification.definition }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% else %}
+            <p class="text-muted">Aucun contenu associé.</p>
+            {% endif %}
+
+            <div class="text-center mt-4">
+                <a href="{{ path('app_exercice') }}" class="btn btn-outline-secondary">
+                    <i class="fas fa-arrow-left"></i> Retour à la liste
+                </a>
+
+                {% if exercice.type == 'Vocabulaire' %}
+                <a href="{{ path('app_exercice_faire_vocabulaire', { 'id': exercice.id, 'origin': 'resultatExercices' }) }}"
+                    class="btn btn-primary">
+                    <i class="fas fa-play-circle"></i> Faire l'exercice
+                </a>
+                {% endif %}
+
+                {% if is_granted('ROLE_ORTHO') %}
+                <a href="{{ path('app_exercice_edit', {'id': exercice.id}) }}" class="btn btn-warning">
+                    <i class="fas fa-edit"></i> Modifier
+                </a>
+                <a href="{{ path('app_signification_new', { id: exercice.id }) }}" class="btn btn-success btn-sm">
+                    <i class="fas fa-plus"></i> Ajouter Signification
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

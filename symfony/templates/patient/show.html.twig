@@ -1,0 +1,130 @@
+{% extends 'base.html.twig' %} {% block title %} Détails du patient {% endblock
+%} {% block body %}
+<div class="container mt-5">
+  <h1 class="text-center text-primary mb-4">Profil du patient</h1>
+  <div class="card shadow-lg">
+    <div class="card-body">
+      <div class="text-center mb-3">
+        {% if patient.imagesPatient is not empty %} {% for image in
+        patient.imagesPatient %}
+        <img
+          src="{{ asset('uploads/images/' ~ image.name) }}"
+          alt="Image de {{ patient.nom }}"
+          class="rounded-circle img-thumbnail"
+          style="width: 150px; height: 150px; object-fit: cover"
+        />
+        {% endfor %} {% else %}
+        <p>Aucune image disponible</p>
+        {% endif %}
+      </div>
+      <h4 class="text-center">{{ patient.nom }} {{ patient.prenom }}</h4>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <strong>Email :</strong>
+          {{ patient.email }}
+        </li>
+        <li class="list-group-item">
+          <strong>Rôle :</strong>
+          {% for role in patient.roles %} {% if role == 'ROLE_USER'
+          %}Utilisateur{% elseif role == 'ROLE_PATIENT' %}Patient {% else %}
+          {{ role }}
+          {% endif %} {% endfor %}
+        </li>
+        <li class="list-group-item">
+          <strong>Téléphone :</strong>
+          {{ patient.telephone ?? "Non renseigné" }}
+        </li>
+        <li class="list-group-item">
+          <strong>Ville :</strong>
+          {{ patient.ville }}
+        </li>
+        <li class="list-group-item">
+          <strong>Genre :</strong>
+          {{ patient.genre | capitalize }}
+        </li>
+        <li class="list-group-item">
+          <strong>Déficient :</strong>
+          {{ patient.specialisation.label }}
+        </li>
+        <li class="list-group-item">
+          <strong>Niveau de langue :</strong>
+          {{
+            patient.niveauLangue ??
+              "Non
+                    renseigné"
+          }}
+        </li>
+        <li class="list-group-item">
+          <strong>Difficultés rencontrées :</strong>
+          <ul>
+            {% for difficulte in patient.difficulteRencontrees %}
+            <li>{{ difficulte }}</li>
+            {% else %}
+            <li>Aucune difficulté renseignée</li>
+            {% endfor %}
+          </ul>
+        </li>
+        <li class="list-group-item">
+          <strong>Date de création :</strong>
+          {{ patient.createdAt|date('d/m/Y H:i')
+          }}
+        </li>
+        <li class="list-group-item">
+          <strong>Choix d'orthophoniste :</strong>
+          {% if orthophoniste is not null %}
+          <a
+            href="{{
+              path('app_orthophoniste_show', { id: orthophoniste.id })
+            }}"
+          >
+            {{ orthophoniste.nom }}
+          </a>
+          {% else %} Aucun orthophoniste sélectionné {% endif %}
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="d-flex justify-content-center mt-4">
+    {% if is_granted("ROLE_ADMIN") %}
+    <a href="{{ path('app_patient') }}" class="btn btn-secondary me-3"
+      >Retour</a
+    >
+    <a
+      href="{{ path('app_patient_edit', { id: patient.id }) }}"
+      class="btn btn-warning me-3"
+      >Modifier</a
+    >
+    {% include 'patient/delete.html.twig' %} {% endif %}
+  </div>
+  {% if is_granted('ROLE_ORTHO') %}
+  <div class="d-flex justify-content-center mt-4 me-4">
+    <a
+      href="{{ path('app_espace_orthophoniste_patient') }}"
+      class="btn btn-primary"
+      >Retour</a
+    >
+    <form
+      method="post"
+      action="{{
+        path('app_patient_remove_orthophoniste', { id: patient.id })
+      }}"
+      class="ms-2"
+      onsubmit="return confirm('Êtes-vous sûr de vouloir arrêter le suivi de ce patient ?');"
+    >
+      <input
+        type="hidden"
+        name="_token"
+        value="{{ csrf_token('remove_orthophoniste' ~ patient.id) }}"
+      />
+      <button
+        type="submit"
+        class="btn btn-danger"
+        aria-label="Arrêter le suivi du patient"
+      >
+        Arrêter le suivi
+      </button>
+    </form>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

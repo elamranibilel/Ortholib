@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{% block body %}
+<h1 class="text-center mb-4 text-dark">Ajouter un Exercice</h1>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg rounded-lg">
+                <div class="card-body p-4">
+                    {% form_theme form 'bootstrap_4_layout.html.twig' %}
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
+
+                    <div class="d-flex justify-content-center gap-3 flex-wrap mt-4">
+                        <button type="submit" class="btn btn-success rounded-pill px-4">
+                            Enregistrer !
+                        </button>
+                        {% if app.request.get('origin') == 'AddExerciceCategorie'%}
+                        <a href="{{ path('app_espace_orthophoniste_choix') }}"
+                            class="btn btn-outline-primary rounded-pill px-4">
+                            Retour
+                        </a>
+                        {% else %}
+                        <a href="{{ path('app_exercice') }}" class="btn btn-outline-primary rounded-pill px-4">
+                            Retour
+                        </a>
+                        {% endif %}
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

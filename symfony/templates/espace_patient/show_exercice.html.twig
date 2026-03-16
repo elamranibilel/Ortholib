@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails de l'Exercice #{{ exercice.id }}{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="text-center mb-4">
+        <h1 class="fw-bold text-primary">Détails de l'Exercice #{{ exercice.id }}</h1>
+    </div>
+
+    <div class="card shadow-lg border-0">
+        <div class="card-body">
+            <h4 class="card-title text-center text-uppercase fw-bold">
+                <span class="badge bg-info text-dark">{{ exercice.type }}</span>
+            </h4>
+
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <p class="fs-5">
+                        <i class="bi bi-clock-history text-warning"></i>
+                        <strong>Chronomètre :</strong>
+                        <span class="text-muted">
+                            {{ exercice.chronometre is not null ? exercice.chronometre ~ ' sec' : 'Non défini' }}
+                        </span>
+                    </p>
+                </div>
+            </div>
+
+            <hr>
+
+            <h5 class="fw-bold mt-3">Historique des Scores :</h5>
+            {% if historique is not empty %}
+            <ul class="list-group">
+                {% for resultat in historique %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span class="fw-bold">
+                        📅 {{ resultat.date|date('d/m/Y H:i') }}
+                    </span>
+                    <span class="badge {% if resultat.score < 50 %} bg-danger 
+                                        {% elseif resultat.score < 80 %} bg-warning text-dark 
+                                        {% else %} bg-success 
+                                        {% endif %} fs-6">
+                        {{ resultat.score }} pts
+                    </span>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p class="text-muted">Aucun score enregistré pour cet exercice.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="{{ path('app_espace_patient') }}" class="btn btn-outline-secondary me-2">
+            <i class="bi bi-arrow-left"></i> Retour
+        </a>
+        {% if exercice.type == 'Vocabulaire' %}
+        <a href="{{ path('app_exercice_faire_vocabulaire', {'id': exercice.id, 'origin': 'resultatEspacePatient'}) }}"
+            class="btn btn-success">
+            <i class="bi bi-play-circle"></i> Let's go !
+        </a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

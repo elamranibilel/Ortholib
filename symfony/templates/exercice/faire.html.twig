@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Faire l'exercice
+{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1 class="text-center">
+            {{ exercice.type }}
+        </h1>
+        <p class="text-center">
+            Associez chaque mot à sa définition :
+        </p>
+        <form action="{{ path('app_exercice_verifier', { id: exercice.id }) }}" method="POST">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4 class="text-center">
+                        Mots
+                    </h4>
+                    <ul class="list-group" id="mots">
+                        {% for signification in significations|shuffle %}
+                            <li class="list-group-item" id="word-{{ signification.id }}">
+                                <input type="checkbox" name="words[]" value="{{ signification.id }}">
+                                {{ signification.mots }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h4 class="text-center">
+                        Définitions
+                    </h4>
+                    <ul class="list-group" id="definitions">
+                        {% for signification in significations|shuffle %}
+                            <li class="list-group-item" id="definition-{{ signification.id }}">
+                                <input type="checkbox" name="definitions[]" value="{{ signification.id }}">
+                                {{ signification.definition }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <input type="hidden" name="associations" id="associations">
+            <div class="text-center mt-3">
+                <button type="submit" class="btn btn-success">
+                    Valider
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        let associations = [];
+
+        document.querySelectorAll("input[name='words[]']").forEach(wordCheckbox => {
+            wordCheckbox.addEventListener("change", handleSelection);
+        });
+
+        document.querySelectorAll("input[name='definitions[]']").forEach(definitionCheckbox => {
+            definitionCheckbox.addEventListener("change", handleSelection);
+        });
+
+        function handleSelection() {
+            let checkedWords = document.querySelectorAll("input[name='words[]']:checked");
+            let checkedDefinitions = document.querySelectorAll("input[name='definitions[]']:checked");
+
+            // Si un mot et une définition sont sélectionnés
+            if (checkedWords.length === 1 && checkedDefinitions.length === 1) {
+                let wordId = checkedWords[0].value;
+                let definitionId = checkedDefinitions[0].value;
+
+                // Enregistrer l'association
+                associations.push({
+                    word: wordId,
+                    definition: definitionId
+                });
+
+                // Masquer les éléments sélectionnés
+                document.getElementById('word-' + wordId).style.display = 'none';
+                document.getElementById('definition-' + definitionId).style.display = 'none';
+
+                // Décocher les cases
+                checkedWords[0].checked = false;
+                checkedDefinitions[0].checked = false;
+            }
+        }
+
+        document.querySelector("form").addEventListener("submit", function () {
+            document.getElementById("associations").value = JSON.stringify(associations);
+        });
+    </script>
+{% endblock %}

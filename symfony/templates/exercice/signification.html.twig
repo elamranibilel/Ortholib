@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Significations de l'Exercice #{{ exercice.id }}{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="text-center">Significations de l'Exercice #{{ exercice.id }}</h1>
+
+    <div class="card shadow-lg p-4">
+        <div class="card-body">
+            <h4 class="card-title">Type : {{ exercice.type }}</h4>
+
+            {% if exercice.contenu|length > 0 %}
+            <h5 class="mt-4">Liste des Significations :</h5>
+            <ul class="list-group">
+                {% for signification in exercice.contenu %}
+                <li class="list-group-item">
+                    <strong>{{ signification.mots }}</strong>
+                    <br>
+                    <em>{{ signification.definition }}</em>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p class="text-muted">Aucune signification associée.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="{{ path('app_exercice_show', { id: exercice.id }) }}" class="btn btn-secondary">Retour à l'exercice</a>
+    </div>
+</div>
+{% endblock %}

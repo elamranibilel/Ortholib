@@ -1,0 +1,160 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Planning{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1 class="mb-4">Mon emploi du temps</h1>
+
+    {% if is_granted('ROLE_ORTHO') %}
+    <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addSeanceModal">
+        Ajouter une séance
+    </button>
+    {% endif %}
+    <div id="calendar"></div>
+</div>
+
+<!-- Modale pour ajouter une séance -->
+<div class="modal fade" id="addSeanceModal" tabindex="-1" aria-labelledby="addSeanceModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Ajouter une séance</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addSeanceForm">
+                    <div class="mb-3">
+                        <label for="patient" class="form-label">Patient</label>
+                        <select class="form-select" id="patient" required>
+                            {% for patient in patients %}
+                            <option value="{{ patient.id }}">{{ patient.nom }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="dateHeureDebut" class="form-label">Date et heure de début</label>
+                        <input type="datetime-local" class="form-control" id="dateHeureDebut" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="dateHeureFin" class="form-label">Date et heure de fin</label>
+                        <input type="datetime-local" class="form-control" id="dateHeureFin" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="mode" class="form-label">Mode</label>
+                        <select class="form-select" id="mode" required>
+                            <option value="présentiel">Présentiel</option>
+                            <option value="visioconférence">Visioconférence</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="exercices" class="form-label">Exercices (optionnel)</label>
+                        <textarea class="form-control" id="exercices"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-success">Ajouter</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        let calendarEl = document.getElementById('calendar');
+        let calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'timeGridWeek',
+            locale: 'fr',
+            slotMinTime: '08:00:00',
+            slotMaxTime: '19:00:00',
+            events: [
+                {% for seance in seances %}
+                {
+                id: "{{ seance.id }}",
+                title: "{{ seance.patient.nom }} - {{ seance.mode }}",
+                start: "{{ seance.dateHeureDebut|date('Y-m-d\\TH:i:s') }}",
+                end: "{{ seance.dateHeureFin|date('Y-m-d\\TH:i:s') }}",
+                backgroundColor: "{{ seance.mode == 'présentiel' ? '#28a745' : '#007bff' }}",
+                borderColor: "#000",
+            },
+            {% endfor %}
+        ]
+    });
+    calendar.render();
+
+    // Ajout de séance avec AJAX
+    document.getElementById('addSeanceForm').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const patientId = document.getElementById('patient').value;
+        const dateHeureDebut = document.getElementById('dateHeureDebut').value;
+        const dateHeureFin = document.getElementById('dateHeureFin').value;
+        const mode = document.getElementById('mode').value;
+        const exercices = document.getElementById('exercices').value;
+
+        // Vérification des dates
+        if (new Date(dateHeureFin) <= new Date(dateHeureDebut)) {
+            alert("Erreur : La date de fin doit être après la date de début.");
+            return;
+        }
+
+        // Calcul de la durée en minutes
+        const duree = (new Date(dateHeureFin) - new Date(dateHeureDebut)) / 60000;
+
+        const requestData = {
+            patient: patientId,
+            dateHeureDebut: dateHeureDebut,
+            dateHeureFin: dateHeureFin,
+            duree: duree,
+            mode: mode,
+            exercices: exercices
+        };
+
+
+
+        console.log("Données envoyées :", requestData);
+
+
+        fetch("{{ path('ajouter_seance') }}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify(requestData)
+        })
+
+            .then(response => response.json())
+            .then(data => {
+                console.log("Réponse du serveur :", data);
+                if (data.success) {
+                    calendar.addEvent({
+                        id: data.id,
+                        title: data.patient + " - " + data.mode,
+                        start: data.dateHeureDebut,
+                        end: data.dateHeureFin,
+                        backgroundColor: data.mode === "présentiel" ? "#28a745" : "#007bff",
+                        borderColor: "#000"
+                    });
+                    console.log(data);
+                    alert("Séance ajoutée !");
+                    let modal = bootstrap.Modal.getInstance(document.getElementById('addSeanceModal'));
+                    modal.hide();
+                } else {
+                    alert("Erreur lors de l'ajout : " + data.message);
+                }
+            })
+            .catch(error => {
+                console.error("Erreur AJAX :", error);
+                alert("Une erreur s'est produite. Vérifie la console pour plus de détails.");
+            });
+    });
+});
+
+</script>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+	Liste des cabinets
+{% endblock %}
+{% block body %}
+	<div class="container mt-5">
+		<div class="d-flex justify-content-between align-items-center mb-4">
+			<h1 class="text-primary">
+				Gestion des cabinets
+			</h1>
+			{% if is_granted('ROLE_ADMIN') %}
+				<a href="{{ path('app_cabinet_new') }}" class="btn btn-success">
+					<i class="bi bi-plus-circle"></i>
+					Ajouter un cabinet
+				</a>
+			{% endif %}
+		</div>
+		<div class="container px-4 px-lg-5 mt-5">
+			<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+				{% for cabinet in cabinets %}
+					<div class="col mb-5">
+						<div class="card h-100 shadow-sm">
+							<div class="d-flex justify-content-center align-items-center" style="height: 200px; overflow: hidden; background-color: transparent; margin: 0; padding: 0;">
+								{% if cabinet.imagesCabinet is not empty %}
+									{% for image in cabinet.imagesCabinet %}
+										<img src="{{ asset('uploads/images/' ~ image.name) }}" alt="Image de {{ cabinet.nom }}" class="img-fluid" style="width: 100%; height: 100%; object-fit: cover; border: none;">
+									{% endfor %}
+								{% else %}
+									<p class="text-muted">
+										Aucune image disponible
+									</p>
+								{% endif %}
+							</div>
+							<div class="card-body p-4">
+								<div class="text-center">
+									<h5 class="fw-bolder">
+										{{ cabinet.nom }}
+									</h5>
+									<p class="text-muted">
+										{{ cabinet.adresse }}
+									</p>
+									<p class="text-success fw-bold">
+										{{ cabinet.telephone }}
+									</p>
+								</div>
+							</div>
+							<div class="card-footer p-4 pt-0 border-top-0 bg-light">
+								<div class="text-center">
+									<a class="btn btn-dark mt-auto" href="{{ path('app_cabinet_show', { id: cabinet.id, 'origin': 'IndexCabinet'}) }}">
+										Voir les détails
+									</a>
+									<a class="btn btn-dark mt-auto" href="{{ path('app_cabinet_ortho', { id: cabinet.id }) }}">
+										La Liste des Orthophonistes
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+		<!-- Pagination -->
+		<div class="d-flex justify-content-center mt-4">
+			{{ knp_pagination_render(cabinets) }}
+		</div>
+	{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{% block body %}
+	<div class="container">
+		<hr>
+		{{ form_start(form) }}
+		{{ form_widget(form) }}
+		<br>
+		<button type="submit" class="btn btn-success">
+			Register !
+		</button>
+		{% set currentRoute = app.request.get('_route') %}
+		{% if currentRoute in ['app_register_orthophoniste'] %}
+			<a href="{{ path('app_register_patient') }}" class="btn btn-primary">
+				Inscription pour Patient
+			</a>
+		{% else %}
+			<a href="{{ path('app_register_orthophoniste') }}" class="btn btn-primary">
+				Inscription pour Orthophoniste
+			</a>
+		{% endif %}
+		<a href="{{ path('app_default') }}" class="btn btn-danger">
+			Retour
+		</a>
+		{{ form_end(form) }}
+	{% endblock %}

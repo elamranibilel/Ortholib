@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Résultat
+{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1 class="text-center">
+            Résultat de l'exercice
+        </h1>
+        <p class="text-center">
+            Votre score :
+            <strong>
+                {{ resultats.score }}
+                %
+            </strong>
+        </p>
+        {% if score == 100 %}
+            <p class="text-success text-center">
+                Bravo ! Vous avez tout bon !
+            </p>
+        {% elseif score >= 50 %}
+            <p class="text-warning text-center">
+                Pas mal, continuez ainsi !
+            </p>
+        {% else %}
+            <p class="text-danger text-center">
+                Il faut s'entraîner davantage ! 
+            </p>
+        {% endif %}
+        <div class="text-center mt-3">
+            <a href="{{ path('app_exercice') }}" class="btn btn-primary">
+                Refaire un exercice
+            </a>
+        </div>
+    </div>
+{% endblock %}

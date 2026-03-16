@@ -1,0 +1,97 @@
+{% extends "base.html.twig" %}
+{% block title %}Listes des Types et des Patients des Exercices{% endblock %}
+
+{% block body %}
+<h1>Listes :</h1>
+<div class="container px-4 px-lg-5 mt-5">
+    <div class="row gx-4 gx-lg-5 row-cols-1 row-cols-md-2 row-cols-lg-4 justify-content-center">
+        <div class="col mb-4">
+            <a href="{{ path('app_espace_orthophoniste_exercices', {'origin': 'TousExercices'}) }}"
+                class="text-decoration-none">
+                <div class="card h-100 shadow-lg border-0 rounded-3 overflow-hidden">
+                    <div class="position-relative" style="height: 200px; background-color: #f8f9fa;">
+                        <img src="{{ asset('uploads/images/exercices.png') }}" alt="Liste des Exercices"
+                            class="img-fluid w-100 h-100" style="object-fit: cover;">
+                        <div
+                            class="overlay position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-flex justify-content-center align-items-center opacity-0 transition-opacity">
+                            <h5 class="text-white fw-bold">Voir la liste</h5>
+                        </div>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5 class="fw-bolder text-dark">Tous les Exercices</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col mb-4">
+            <a href="{{path('app_exercice_type')}}" class="text-decoration-none">
+                <div class="card h-100 shadow-lg border-0 rounded-3 overflow-hidden">
+                    <div class="position-relative" style="height: 200px; background-color: #f8f9fa;">
+                        <img src="{{ asset('uploads/images/exercices.webp') }}" alt="Types"
+                            class="img-fluid w-100 h-100" style="object-fit: cover;">
+                        <div
+                            class="overlay position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-flex justify-content-center align-items-center opacity-0 transition-opacity">
+                            <h5 class="text-white fw-bold">Voir les exercices</h5>
+                        </div>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5 class="fw-bolder text-dark">Types</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col mb-4">
+            <a href="{{path('app_espace_orthophoniste_patient', {'origin': 'ExercicePatient'})}}"
+                class="text-decoration-none">
+                <div class="card h-100 shadow-lg border-0 rounded-3 overflow-hidden">
+                    <div class="position-relative" style="height: 200px; background-color: #f8f9fa;">
+                        <img src="{{ asset('uploads/images/audition.webp') }}" alt="Listes des Patients"
+                            class="img-fluid w-100 h-100" style="object-fit: cover;">
+                        <div
+                            class="overlay position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-flex justify-content-center align-items-center opacity-0 transition-opacity">
+                            <h5 class="text-white fw-bold">Voir les exercices</h5>
+                        </div>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5 class="fw-bolder text-dark">Listes des Patients </h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col mb-4">
+            <a href="{{path('app_exercice_new', {'origin': 'AddExerciceCategorie'})}}" class="text-decoration-none">
+                <div class="card h-100 shadow-lg border-0 rounded-3 overflow-hidden">
+                    <div class="position-relative" style="height: 200px; background-color: #f8f9fa;">
+                        <img src="{{ asset('uploads/images/new.jpg') }}" alt="Ajouter un exercice"
+                            class="img-fluid w-100 h-100" style="object-fit: cover;">
+                        <div
+                            class="overlay position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-flex justify-content-center align-items-center opacity-0 transition-opacity">
+                            <h5 class="text-white fw-bold">Ajouter un Exercice</h5>
+                        </div>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5 class="fw-bolder text-dark">Ajouter un Exercice</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col mb-4">
+            <a href="{{path('app_espace_orthophoniste')}}" class="text-decoration-none">
+                <div class="card h-100 shadow-lg border-0 rounded-3 overflow-hidden">
+                    <div class="position-relative" style="height: 200px; background-color: #f8f9fa;">
+                        <img src="{{ asset('uploads/images/sortie.png') }}" alt="Retour" class="img-fluid w-75 h-115"
+                            style="object-fit: cover;">
+                        <div
+                            class="overlay position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-flex justify-content-center align-items-center opacity-0 transition-opacity">
+                            <h5 class="text-white fw-bold">Retour</h5>
+                        </div>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5 class="fw-bolder text-dark">Retour </h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

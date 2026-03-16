@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails du Cabinet
+{% endblock %}
+
+{% block body %}
+	<div class="container mt-5 d-flex justify-content-center">
+		<div class="col-md-8">
+			<h1 class="text-center text-primary mb-4">Détails du Cabinet</h1>
+
+			<div class="card shadow-sm p-4 text-center">
+				<div class="mb-4">
+					{% if cabinet.imagesCabinet is not empty %}
+						{% for image in cabinet.imagesCabinet %}
+							<img src="{{ asset('uploads/images/' ~ image.name) }}" alt="Image de {{ cabinet.nom }}" class="img-fluid rounded shadow-sm" style="max-width: 300px;">
+						{% endfor %}
+					{% else %}
+						<p class="text-muted">Aucune image disponible</p>
+					{% endif %}
+				</div>
+
+				<h3 class="text-primary">{{ cabinet.nom }}</h3>
+				<p class="text-muted">{{ cabinet.adresse }}</p>
+				<p>
+					<strong>Téléphone :</strong>
+					{{ cabinet.telephone }}</p>
+
+				<div class="mt-4 text-start">
+					<h4 class="text-secondary">Orthophonistes</h4>
+					{% if orthophonistes is empty %}
+						<p class="text-muted">Aucun orthophoniste dans ce cabinet.</p>
+					{% else %}
+						<div class="list-group">
+							{% for orthophoniste in orthophonistes %}
+								<div class="list-group-item">
+									<strong>{{ orthophoniste.nom }}
+										{{ orthophoniste.prenom }}</strong>
+									{% if orthophoniste.patients is not empty %}
+										<ul class="mt-2">
+											{% for patient in orthophoniste.patients %}
+												<li>{{ patient.nom }}</li>
+											{% endfor %}
+										</ul>
+									{% else %}
+										<p class="text-muted">Aucun patient assigné.</p>
+									{% endif %}
+								</div>
+							{% endfor %}
+						</div>
+					{% endif %}
+				</div>
+
+				<div class="mt-4 text-start">
+					<h4 class="text-secondary">Patients</h4>
+					{% set hasPatients = false %}
+					<ul>
+						{% for orthophoniste in orthophonistes %}
+							{% for patient in orthophoniste.patients %}
+								{% set hasPatients = true %}
+								<li>{{ patient.nom }}</li>
+							{% endfor %}
+						{% endfor %}
+					</ul>
+					{% if not hasPatients %}
+						<p class="text-muted">Aucun patient dans ce cabinet.</p>
+					{% endif %}
+				</div>
+			</div>
+
+			<div class="d-flex justify-content-center mt-4">
+				{% if app.request.get('origin') == 'IndexCabinet' %}
+					<a href="{{ path('app_cabinet') }}" class="btn btn-primary me-3">Retour</a>
+				{% elseif app.request.get('origin') == 'ShowCabinet' %}
+					<a href="{{ path('app_orthophoniste_show', {'id': cabinet.id}) }}" class="btn btn-primary me-3">Retour</a>
+				{% endif %}
+				{% if is_granted(['ROLE_ADMIN', 'ROLE_ORTHO']) %}
+					<a href="{{ path('app_cabinet_edit', {'id': cabinet.id}) }}" class="btn btn-warning me-3">Modifier</a>
+					{{ include('cabinet/delete.html.twig', { cabinet: cabinet }) }}
+				{% endif %}
+			</div>
+		</div>
+	</div>
+{% endblock %}

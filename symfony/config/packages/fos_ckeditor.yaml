@@ -1,0 +1,36 @@
+fos_ck_editor:
+  base_path: "https://cdn.ckeditor.com/4.22.1/full-all"
+  js_path: "https://cdn.ckeditor.com/4.22.1/full-all/ckeditor.js"
+
+  default_config: my_full_toolbar
+  configs:
+    my_full_toolbar:
+      toolbar: full # 🚀 Utiliser directement la toolbar full installée
+      uiColor: "#f4f4f4" # Couleur de fond claire
+      height: 400 # Hauteur confortable pour écrire
+      removePlugins: "exportpdf"
+
+      font_names: |
+        Arial/Arial, Helvetica, sans-serif;
+        Comic Sans MS/Comic Sans MS, cursive;
+        Courier New/Courier New, Courier, monospace;
+        Georgia/Georgia, serif;
+        Lucida Sans Unicode/Lucida Grande, sans-serif;
+        Tahoma/Tahoma, Geneva, sans-serif;
+        Times New Roman/Times New Roman, Times, serif;
+        Trebuchet MS/Trebuchet MS, Helvetica, sans-serif;
+        Verdana/Verdana, Geneva, sans-serif;
+      fontSize_sizes: |
+        8/8px;
+        10/10px;
+        12/12px;
+        14/14px;
+        16/16px;
+        18/18px;
+        24/24px;
+        36/36px;
+      removeButtons: "" # Optionnel : tu peux retirer des boutons si besoin plus tard
+
+twig:
+  form_themes:
+    - "@FOSCKEditor/Form/ckeditor_widget.html.twig"

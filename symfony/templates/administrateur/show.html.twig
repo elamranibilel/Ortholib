@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %} {% block title %} Détails de l'administrateur {%
+endblock %} {% block body %}
+<h1>
+  {{ administrateur.nom }}
+  {{ administrateur.prenom }}
+</h1>
+<p>
+  Email :
+  {{ administrateur.email }}
+</p>
+<a href="{{ path('app_administrateur_edit', { id: administrateur.id }) }}">
+  Modifier
+</a>
+<form
+  action="{{ path('app_administrateur_delete', { id: administrateur.id }) }}"
+  method="post"
+>
+  <input
+    type="hidden"
+    name="_token"
+    value="{{ csrf_token('delete' ~ administrateur.id) }}"
+  />
+  <button
+    type="submit"
+    onclick="return confirm('Voulez-vous vraiment supprimer cet administrateur ?');"
+  >
+    Supprimer
+  </button>
+</form>
+{% endblock %}

@@ -1,0 +1,92 @@
+<?php
+
+namespace App\Controller;
+
+use App\Entity\Patient;
+use App\Entity\Seances;
+use App\Entity\Orthophoniste;
+use App\Repository\SeancesRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
+final class PlanningController extends AbstractController
+{
+    #[Route('/planning', name: 'app_planning')]
+    public function index(EntityManagerInterface $manager, SeancesRepository $seancesRepository): Response
+    {
+        $orthophoniste = $this->getUser();
+
+        if (!$orthophoniste instanceof Orthophoniste) {
+            throw $this->createAccessDeniedException("Accès interdit");
+        }
+
+        // Récupérer uniquement les séances de l'orthophoniste connecté
+        $seances = $seancesRepository->findBy(['orthophoniste' => $orthophoniste]);
+
+        // Récupérer uniquement les patients qui ont choisi cet orthophoniste
+        $patients = $manager->getRepository(Patient::class)->findBy(['choixOrtho' => $orthophoniste]);
+
+        return $this->render('planning/index.html.twig', [
+            'seances' => $seances,
+            'patients' => $patients,
+        ]);
+    }
+
+    #[Route('/ajouter-seance', name: 'ajouter_seance', methods: ['POST'])]
+    public function ajouterSeance(Request $request, EntityManagerInterface $em, Security $security): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+        dd("ezezezezez");
+
+        if (!$data) {
+            return new JsonResponse(['success' => false, 'message' => 'Données JSON invalides'], 400);
+        }
+
+        // Vérifier les champs
+        if (!isset($data['patient'], $data['dateHeureDebut'], $data['dateHeureFin'], $data['mode'])) {
+            return new JsonResponse(['success' => false, 'message' => 'Champs requis manquants'], 400);
+        }
+
+        // Vérifier que le patient existe
+        $patient = $em->getRepository(Patient::class)->find($data['patient']);
+        if (!$patient) {
+            return new JsonResponse(['success' => false, 'message' => 'Patient introuvable'], 400);
+        }
+
+        try {
+            // Créer la nouvelle séance
+            $seance = new Seances();
+            $seance->setPatient($patient);
+            $dateHeureDebut = new \DateTime($data['dateHeureDebut']);
+            $dateHeureFin = new \DateTime($data['dateHeureFin']);
+            $seance->setDateHeureDebut($dateHeureDebut);
+            $seance->setDateHeureFin($dateHeureFin);
+            $seance->setMode($data['mode']);
+
+            // Calculer la durée
+            $duree = $dateHeureDebut->diff($dateHeureFin);
+            $seance->setDuree($duree->format('%H:%I:%S'));
+
+            // Sauvegarder la séance
+            $em->persist($seance);
+            $em->flush();
+
+            return new JsonResponse([
+                'success' => true,
+                'id' => $seance->getId(),
+                'patient' => $patient->getNom(),
+                'dateHeureDebut' => $seance->getDateHeureDebut()->format('Y-m-d\TH:i:s'),
+                'dateHeureFin' => $seance->getDateHeureFin()->format('Y-m-d\TH:i:s'),
+                'mode' => $seance->getMode(),
+                'duree' => $seance->getDuree(),
+            ]);
+        } catch (\Exception $e) {
+            return new JsonResponse(['success' => false, 'message' => 'Erreur serveur: ' . $e->getMessage()], 500);
+        }
+    }
+}

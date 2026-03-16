@@ -1,0 +1,154 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    {% if app.user is not null %}
+    <a
+      class="nav-link active"
+      aria-current="page"
+      href="{% if is_granted('ROLE_ADMIN') %}{{
+        path('app_default')
+      }}{% elseif is_granted('ROLE_ORTHO') %}{{
+        path('app_espace_orthophoniste')
+      }}{% elseif is_granted('ROLE_PATIENT') %}{{
+        path('app_espace_patient')
+      }}{% endif %}"
+    >
+      <img
+        src="{{ asset('uploads/images/logo.jpg') }}"
+        alt="Logo de l'application"
+        style="width: 70px; height: 70px; border-radius: 10px"
+      />
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNavDropdown"
+      aria-controls="navbarNavDropdown"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <!-- Menu à gauche -->
+      <ul class="navbar-nav">
+        {% if is_granted('ROLE_ADMIN') %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{ path('app_user') }}">Personnel</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ path('app_orthophoniste') }}"
+            >Orthophoniste</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ path('app_patient') }}">Patient</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ path('app_cabinet') }}">Cabinet</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ path('admin') }}">Gestionnaire</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ path('app_search') }}">Recherche</a>
+        </li>
+        {% elseif is_granted('ROLE_ORTHO') %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{ path('app_espace_orthophoniste') }}"
+            >Espace</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            href="{{ path('app_espace_orthophoniste_patient') }}"
+            >Patients</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ path('app_search') }}">Recherche</a>
+        </li>
+        {#
+        <li class="nav-item">
+          <a
+            href="{{
+              path('app_cabinet_orthophoniste', { id: orthophoniste.id })
+            }}"
+            >Orthophonistes</a
+          >
+        </li>
+        #} {% elseif is_granted('ROLE_PATIENT') %}
+        <li class="nav-item">
+          <a class="nav-link" href="{{ path('app_espace_patient') }}">Espace</a>
+        </li>
+        {% endif %}
+      </ul>
+
+      <!-- Menu à droite -->
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            href="{% if is_granted('ROLE_ADMIN') %}{{
+              path('app_user')
+            }}{% elseif is_granted('ROLE_ORTHO') %}{{
+              path('app_orthophoniste_show', { id: app.user.id })
+            }}{% elseif is_granted('ROLE_PATIENT') %}{{
+              path('app_patient_show', { id: app.user.id })
+            }}{% endif %}"
+            >Compte</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-danger" href="{{ path('app_logout') }}"
+            >Déconnexion</a
+          >
+        </li>
+      </ul>
+    </div>
+
+    {% else %}
+    <!-- Lien Connexion si l'utilisateur n'est pas connecté -->
+    <a
+      class="nav-link active"
+      aria-current="page"
+      href="{{ path('app_login') }}"
+    >
+      <img
+        src="{{ asset('uploads/images/logo.jpg') }}"
+        alt="Logo de l'application"
+        style="width: 70px; height: 70px; border-radius: 10px"
+      />
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNavDropdown"
+      aria-controls="navbarNavDropdown"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a
+            class="nav-link text-success"
+            href="{{ path('app_register_patient') }}"
+            >Inscription</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-success" href="{{ path('app_login') }}"
+            >Connexion</a
+          >
+        </li>
+      </ul>
+    </div>
+    {% endif %}
+  </div>
+</nav>

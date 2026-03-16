@@ -1,0 +1,8 @@
+<form action="{{ path('app_orthophoniste_delete', {'id': orthophoniste.id}) }}" 
+      onclick="event.stopPropagation();" 
+      method="POST" 
+      onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet orthophoniste ?');" 
+      style="display: inline;">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ orthophoniste.id) }}">
+    <button class="btn btn-danger btn-sm rounded" type="submit">Supprimer</button>
+</form>
